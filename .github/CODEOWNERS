@@ -1,0 +1,14 @@
+# CODEOWNERS — 自动分配 PR 审核人
+# 格式：文件/目录模式  @GitHub用户名（或团队名）
+
+# 所有文件的默认审核人
+*       @freedom22-cyber
+
+# HTML 变更需要审核
+/*.html @freedom22-cyber
+
+# CSS 变更需要审核
+/*.css  @freedom22-cyber
+
+# CI/CD 配置变更
+/.github/ @freedom22-cyber
