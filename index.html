@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        document.documentElement.setAttribute('data-theme',
+            localStorage.getItem('theme') ||
+            (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light')
+        )
+    </script>
     <title>陈思琪 Siqi Chen — Resume</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -23,16 +29,20 @@
             <a href="#research">研究</a>
             <a href="#contact">联系</a>
         </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+            <span class="theme-icon-light">☀️</span>
+            <span class="theme-icon-dark">🌙</span>
+        </button>
     </div>
 </nav>
 
 <!-- Hero -->
 <header class="hero">
     <div class="container">
-        <div class="hero-badge">AI 全栈 · 凝聚态物理硕士 · 华为 FAE/TD</div>
+        <div class="hero-badge">AI 全栈 · 计算凝聚态物理硕士 · 华为 FDE/TD</div>
         <h1 class="hero-name">陈思琪</h1>
         <p class="hero-name-en">Siqi Chen</p>
-        <p class="hero-desc">存储与 AI 双 HCIE；一线 TD/FAE，覆盖金融、政务、智算与存力集群；<br>主导大EP / HCS 集成与昇腾推理落地。</p>
+        <p class="hero-desc">存储与 AI 双 HCIE · 一线 TD/FDE<br>覆盖金融、政务、智算与存力集群 · 主导大EP昇腾推理与应用落地</p>
         <div class="hero-tags">
             <span class="tag">Python</span>
             <span class="tag">PyTorch</span>
@@ -61,7 +71,7 @@
                 <div class="stat-label">硕士成绩</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">全球首套</div>
+                <div class="stat-number">教育行业首套</div>
                 <div class="stat-label">超节点商用</div>
             </div>
         </div>
@@ -75,9 +85,9 @@
         <div class="about-content">
             <div class="about-text">
                 <p><strong>跨学科系统思维，从理论到工程的价值落地。</strong></p>
-                <p>跨学科认知优势：凝聚态物理训练抽象推理；存储与 AI 双 HCIE 印证从「国家存力集群」到「深圳 AI 推理云」的全栈实践。系统化拆解问题，主导架构设计、平台适配与运维升级，追求高可用与规模化落地。</p>
-                <p>跨界交付与价值导向：一线 TD、FAE——既深入技术细节，又面向客户业务价值；关注真实场景落地与影响，持续学习、快速迭代，相信复杂问题可被拆解与解决。</p>
-                <p>持续成长：将 AI-Agent、算力平台等新兴领域视为能力延伸，在深度与广度间保持平衡，以开放心态面对技术演进。</p>
+                <p>跨学科认知优势：计算凝聚态物理训练抽象推理；存储与 AI 双 HCIE 印证从「国家存力集群」到「深圳 AI 推理云」的全栈实践。系统化拆解问题，主导架构设计、平台适配与运维升级，追求高可用与规模化落地。</p>
+                <p>跨界交付与价值导向：一线 TD、FDE——既深入技术细节，又面向客户业务价值；关注真实场景落地与影响，持续学习、快速迭代，相信复杂问题可被拆解与解决。</p>
+                <p>持续成长：将 AI-Agent 视为能力延伸，在深度与广度上持续跟进，以开放心态面对技术演进。</p>
             </div>
         </div>
     </div>
@@ -93,7 +103,7 @@
             <div class="timeline-item">
                 <div class="timeline-header">
                     <div class="timeline-company">
-                        <h3>广东咨询与系统集成部 · FAE</h3>
+                        <h3>广东咨询与系统集成部 · FDE</h3>
                         <span class="timeline-org">华为技术有限公司</span>
                     </div>
                     <div class="timeline-meta">
@@ -101,18 +111,22 @@
                         <span class="timeline-location">深圳</span>
                     </div>
                 </div>
-                <p class="timeline-subtitle">AI 项目群 & 金融头部客户</p>
+                <p class="timeline-subtitle">AI 项目群 & 金融头部客户 & 教育行业算力灯塔</p>
                 <ul class="timeline-details">
                     <li><strong>高潜人才专项：</strong>入选广东代表处「高潜资源池」，骨干参与「政企建能力」，承担深圳政企算力平台服务规模化落地。</li>
-                    <li><strong>全球首套超节点：</strong>骨干参与商用 Atlas 800T A3 384 风冷超节点，攻克大规模集群训练通信与稳定性，实现商用上线。</li>
-                    <li><strong>AI 工具链（AscendBridge）：</strong>AI-Agent 自动化适配落地金融与政务；HF→昇腾 NPU 迁移从天级到分钟级；多 SOTA 大模型适配与推理部署。</li>
+                    <li><strong>教育行业首套超节点：</strong>骨干参与商用 Atlas 800T A3 384 风冷超节点，攻克大规模集群训练通信与稳定性，实现商用上线。</li>
+                    <li><strong>AI 工具链（AscendBridge）：</strong>AI-Agent 实现HF模型→昇腾 NPU 迁移从天级到分钟级；SOTA 500 大模型适配与推理部署。</li>
                     <li><strong>架构与运维：</strong>HCS+第三方模型整体方案；大 EP 与 HCS 深度适配集成；大 EP 平台迭代、升级与日常维护，保障生产高可用。</li>
+                    <li><strong>教育行业算力灯塔（SLAI）：</strong>参与华为算力平台先遣队高校分队，聚焦 AI 科研、AI+X 交叉学科、AI 助教/助学四大核心场景；推动 AscendBridge 2.0 开源（模型全自动适配与调优，3天→1小时）；参与全球首发 SLAI 基于国产算力集群完成 DeepSeek-V4-Pro 全参数后训练；联合共建大湾区 AI 产业联合体，孵化昇腾系列微课程与全国首届智能算子测试大赛。</li>
                 </ul>
                 <div class="timeline-tags">
                     <span class="tag-sm">昇腾算力</span>
                     <span class="tag-sm">Atlas 800T A3</span>
                     <span class="tag-sm">AI-Agent</span>
                     <span class="tag-sm">大模型推理</span>
+                    <span class="tag-sm">SLAI</span>
+                    <span class="tag-sm">AscendBridge</span>
+                    <span class="tag-sm">DeepSeek</span>
                 </div>
             </div>
 
@@ -120,7 +134,7 @@
             <div class="timeline-item">
                 <div class="timeline-header">
                     <div class="timeline-company">
-                        <h3>算力平台战略预备队 · FAE</h3>
+                        <h3>算力平台战略预备队 · FDE</h3>
                         <span class="timeline-org">华为技术有限公司</span>
                     </div>
                     <div class="timeline-meta">
@@ -150,7 +164,7 @@
                     </div>
                     <div class="timeline-meta">
                         <span class="timeline-date">2022.12 – 2024.08</span>
-                        <span class="timeline-location">国家级枢纽 & HPC</span>
+                        <span class="timeline-location">国家级存力枢纽 & 气象HPC</span>
                     </div>
                 </div>
                 <p class="timeline-subtitle">东数西算核心节点</p>
@@ -189,7 +203,7 @@
             <div class="skill-card">
                 <div class="skill-icon">🧠</div>
                 <h3>机器学习与深度学习</h3>
-                <p>机器学习 · 深度学习 · CNN/NLP · LLM · 深度学习系统</p>
+                <p>机器学习 · 深度学习 · CNN/NLP · LLM · 深度学习系统<br><strong>课程：</strong><a href="https://courses.d2l.ai/zh-v2/" target="_blank" class="inline-link">动手学深度学习（d2l.ai）</a>— CNN · RNN · Transformer · BERT · 注意力机制 · 计算机视觉 · 目标检测 · 语义分割</p>
             </div>
             <div class="skill-card">
                 <div class="skill-icon">🛠</div>
@@ -218,7 +232,7 @@
             <div class="edu-card">
                 <div class="edu-degree">硕士</div>
                 <h3>重庆大学</h3>
-                <p class="edu-major">凝聚态物理 · 均分 85/100（前 20%）</p>
+                <p class="edu-major">计算凝聚态物理 · 均分 85/100（前 20%）</p>
                 <p class="edu-date">2019.09 – 2023.06</p>
                 <p class="edu-courses">固体理论、量子力学、群论；半导体物理、统计力学</p>
             </div>
@@ -252,7 +266,7 @@
         <div class="research-list">
             <div class="research-item">
                 <h3>单位点掺杂石墨烯的气体传感性能研究</h3>
-                <p class="research-meta">2020.03 – 2021.05 · 导师：甘立勇</p>
+                <p class="research-meta">2020.03 – 2021.05 · 重庆大学物理学院 · 甘立勇教授课题组</p>
                 <p>通过理论与实验结合，证明 NiN₄ 掺杂石墨烯对 NO、NO₂ 同时具有高敏感性与选择性。基于第一性原理，结合 I-V、态密度、差分电荷密度等验证预测，实验与理论一致。</p>
                 <div class="research-quote">「这项工作可能会进一步促进石墨烯基材料在新兴柔性气体传感器领域研究的发展。」</div>
                 <div class="timeline-tags">
@@ -340,6 +354,34 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.timeline-item, .skill-card, .edu-card, .research-item, .contact-card, .stat-item').forEach(el => {
     el.classList.add('fade-in');
     observer.observe(el);
+});
+
+// Theme toggle
+const themeToggle = document.getElementById('themeToggle');
+const html = document.documentElement;
+
+function getPreferredTheme() {
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function applyTheme(theme) {
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+}
+
+applyTheme(getPreferredTheme());
+
+themeToggle.addEventListener('click', () => {
+    const current = html.getAttribute('data-theme');
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+});
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+        applyTheme(e.matches ? 'dark' : 'light');
+    }
 });
 </script>
 
