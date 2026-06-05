@@ -7,17 +7,14 @@
 
 /* ── Design Tokens ─────────────────────────── */
 :root {
+    --font-display: 'Bricolage Grotesque', sans-serif;
     --text-1: #1d1d1f;
     --text-2: #6e6e73;
     --text-3: #86868b;
-    --text-4: #aeaeb2;
     --surface-1: #ffffff;
     --surface-2: #f5f5f7;
-    --surface-3: #fbfbfd;
-    --divider: #d2d2d7;
     --divider-subtle: #e8e8ed;
     --blue: #0071e3;
-    --blue-hover: #0077ed;
     --blue-soft: rgba(0, 113, 227, 0.08);
     --nav-bg: rgba(255, 255, 255, 0.72);
     --nav-divider: rgba(0, 0, 0, 0.1);
@@ -28,15 +25,11 @@
 [data-theme="dark"] {
     --text-1: #f5f5f7;
     --text-2: #c8c8cc;
-    --text-3: #9e9ea3;
-    --text-4: #636366;
+    --text-3: #b8b8bd;
     --surface-1: #000000;
     --surface-2: #111111;
-    --surface-3: #1c1c1e;
-    --divider: #38383a;
     --divider-subtle: #2c2c2e;
     --blue: #2997ff;
-    --blue-hover: #4db2ff;
     --blue-soft: rgba(41, 151, 255, 0.12);
     --nav-bg: rgba(0, 0, 0, 0.72);
     --nav-divider: rgba(255, 255, 255, 0.08);
@@ -53,7 +46,7 @@
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
 body {
-    font-family: 'Figtree', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
     color: var(--text-1);
     background: var(--surface-1);
     line-height: 1.47;
@@ -84,7 +77,7 @@ body {
 }
 
 .nav-logo {
-    font-family: 'Bricolage Grotesque', sans-serif;
+    font-family: var(--font-display);
     font-weight: 700; font-size: 22px; letter-spacing: -0.02em;
     color: var(--text-1); transition: color 0.6s ease;
 }
@@ -117,7 +110,7 @@ body {
 }
 
 .hero-name {
-    font-family: 'Bricolage Grotesque', sans-serif;
+    font-family: var(--font-display);
     font-size: 96px; font-weight: 400; letter-spacing: -0.045em;
     line-height: 0.95; margin-bottom: 8px;
     color: var(--text-1);
@@ -146,11 +139,14 @@ body {
 }
 
 .tag {
-    display: inline-block; padding: 7px 18px; font-size: 13px; font-weight: 500;
+    display: inline-block; font-weight: 500;
     color: var(--text-1); background: var(--surface-2); border-radius: 980px;
-    letter-spacing: 0; transition: background 0.3s, color 0.3s, transform 0.2s;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
 }
-.tag:hover { background: var(--blue-soft); color: var(--blue); transform: scale(1.05); }
+.tag:hover { background: var(--blue-soft); color: var(--blue); }
+.tag-lg { padding: 7px 18px; font-size: 13px; letter-spacing: 0; }
+.tag-lg:hover { transform: scale(1.05); }
+.tag-sm { padding: 5px 13px; font-size: 12px; letter-spacing: 0.01em; color: var(--text-2); }
 
 /* ── Stats · Apple Specs Row ───────────────── */
 .stats {
@@ -167,7 +163,7 @@ body {
 }
 
 .stat-number {
-    font-family: 'Bricolage Grotesque', sans-serif;
+    font-family: var(--font-display);
     font-size: clamp(28px, 5vw, 44px); font-weight: 700; letter-spacing: -0.03em;
     color: var(--text-1); line-height: 1.1; margin-bottom: 4px;
     white-space: nowrap;
@@ -183,7 +179,7 @@ body {
 .section-alt { background: var(--surface-2); transition: background 0.6s ease; }
 
 .section-title {
-    font-family: 'Bricolage Grotesque', sans-serif;
+    font-family: var(--font-display);
     font-size: 56px; font-weight: 700; letter-spacing: -0.035em;
     margin-bottom: 56px; text-align: center;
     color: var(--text-1); transition: color 0.6s ease;
@@ -197,23 +193,27 @@ body {
 }
 .about-text strong { color: var(--text-1); font-weight: 600; transition: color 0.6s ease; }
 
-/* ── Timeline · Apple Card ────────────────── */
-.timeline { display: grid; gap: 16px; }
-
-.timeline-item {
-    padding: 36px 40px 32px; background: var(--surface-1);
-    border-radius: 20px; border: none; box-shadow: var(--card-shadow);
+/* ── Shared Card Base ─────────────────────── */
+.card {
+    background: var(--surface-1); border-radius: 20px; border: none;
+    box-shadow: var(--card-shadow);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 0.4s ease, background 0.6s ease;
 }
-.timeline-item:hover { transform: scale(1.006); box-shadow: var(--card-shadow-hover); }
+.card:hover { box-shadow: var(--card-shadow-hover); }
+
+/* ── Timeline · Apple Card ────────────────── */
+.timeline { display: grid; gap: 16px; }
+
+.timeline-item { padding: 36px 40px 32px; }
+.timeline-item:hover { transform: scale(1.006); }
 
 .timeline-header {
     display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;
 }
 
 .timeline-company h3 {
-    font-family: 'Bricolage Grotesque', sans-serif;
+    font-family: var(--font-display);
     font-size: 22px; font-weight: 600; letter-spacing: -0.02em;
     margin-bottom: 3px; color: var(--text-1); transition: color 0.6s ease;
 }
@@ -242,23 +242,12 @@ body {
     padding-top: 16px; border-top: 0.5px solid var(--divider-subtle);
 }
 
-.tag-sm {
-    display: inline-block; padding: 5px 13px; font-size: 12px; font-weight: 500;
-    color: var(--text-2); background: var(--surface-2); border-radius: 980px;
-    letter-spacing: 0.01em; transition: all 0.2s ease;
-}
-.tag-sm:hover { background: var(--blue-soft); color: var(--blue); }
 
 /* ── Skills · Apple Feature Grid ──────────── */
 .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 
-.skill-card {
-    padding: 32px; background: var(--surface-1);
-    border-radius: 20px; border: none; box-shadow: var(--card-shadow);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.4s ease, background 0.6s ease;
-}
-.skill-card:hover { transform: translateY(-4px); box-shadow: var(--card-shadow-hover); }
+.skill-card { padding: 32px; }
+.skill-card:hover { transform: translateY(-4px); }
 
 .skill-icon {
     display: inline-flex; align-items: center; justify-content: center;
@@ -269,7 +258,7 @@ body {
 .skill-card:hover .skill-icon { transform: scale(1.1); background: var(--blue-soft); }
 
 .skill-card h3 {
-    font-family: 'Bricolage Grotesque', sans-serif;
+    font-family: var(--font-display);
     font-size: 18px; font-weight: 600; margin-bottom: 10px;
     letter-spacing: -0.01em; color: var(--text-1); transition: color 0.6s ease;
 }
@@ -279,20 +268,14 @@ body {
 /* ── Education ─────────────────────────────── */
 .edu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 56px; }
 
-.edu-card {
-    padding: 40px; background: var(--surface-1);
-    border-radius: 20px; border: none; box-shadow: var(--card-shadow);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.4s ease, background 0.6s ease;
-    position: relative; overflow: hidden;
-}
+.edu-card { padding: 40px; position: relative; overflow: hidden; }
 .edu-card::after {
     content: ''; position: absolute; top: -60px; right: -40px;
     width: 160px; height: 160px; border-radius: 50%;
     background: var(--blue); opacity: 0.03; pointer-events: none;
     transition: opacity 0.4s ease;
 }
-.edu-card:hover { transform: scale(1.008); box-shadow: var(--card-shadow-hover); }
+.edu-card:hover { transform: scale(1.008); }
 .edu-card:hover::after { opacity: 0.06; }
 
 .edu-degree {
@@ -301,7 +284,7 @@ body {
     margin-bottom: 18px; letter-spacing: 0.01em;
 }
 .edu-card h3 {
-    font-family: 'Bricolage Grotesque', sans-serif;
+    font-family: var(--font-display);
     font-size: 26px; font-weight: 700; letter-spacing: -0.02em;
     margin-bottom: 8px; color: var(--text-1); transition: color 0.6s ease;
 }
@@ -316,16 +299,11 @@ body {
 /* ── Research ──────────────────────────────── */
 .research-list { display: grid; gap: 16px; }
 
-.research-item {
-    padding: 40px; background: var(--surface-1);
-    border-radius: 20px; border: none; box-shadow: var(--card-shadow);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.4s ease, background 0.6s ease;
-}
-.research-item:hover { transform: scale(1.004); box-shadow: var(--card-shadow-hover); }
+.research-item { padding: 40px; }
+.research-item:hover { transform: scale(1.004); }
 
 .research-item h3 {
-    font-family: 'Bricolage Grotesque', sans-serif;
+    font-family: var(--font-display);
     font-size: 21px; font-weight: 600; letter-spacing: -0.01em;
     margin-bottom: 8px; color: var(--text-1); transition: color 0.6s ease;
 }
@@ -345,13 +323,9 @@ body {
 
 .contact-card {
     display: flex; flex-direction: column; align-items: center;
-    padding: 40px 24px; background: var(--surface-1);
-    border-radius: 20px; border: none; box-shadow: var(--card-shadow);
-    text-decoration: none;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.4s ease, background 0.6s ease;
+    padding: 40px 24px; text-decoration: none;
 }
-.contact-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: var(--card-shadow-hover); }
+.contact-card:hover { transform: translateY(-4px) scale(1.01); }
 
 .contact-icon { font-size: 36px; margin-bottom: 16px; transition: transform 0.3s ease; }
 .contact-card:hover .contact-icon { transform: scale(1.15); }
@@ -417,4 +391,25 @@ body {
     .stat-number { font-size: 30px; }
     .nav-links { gap: 14px; }
     .nav-links a { font-size: 11px; }
+}
+
+/* Print — A4 PDF export */
+@media print {
+    .nav, .theme-toggle, .footer { display: none !important; }
+
+    body { background: white !important; }
+    .section-alt { background: white !important; }
+
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #e0e0e0 !important;
+        break-inside: avoid;
+    }
+
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    @page { size: A4; margin: 15mm; }
 }

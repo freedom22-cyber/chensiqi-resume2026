@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Figtree:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -33,6 +33,15 @@
             <span class="theme-icon-light">☀️</span>
             <span class="theme-icon-dark">🌙</span>
         </button>
+        <script>
+            // Sync aria-label with the theme set by the head script
+            (function() {
+                var t = document.documentElement.getAttribute('data-theme');
+                document.getElementById('themeToggle').setAttribute('aria-label',
+                    t === 'dark' ? '切换到浅色模式' : '切换到深色模式'
+                );
+            })();
+        </script>
     </div>
 </nav>
 
@@ -44,12 +53,12 @@
         <p class="hero-name-en">Siqi Chen</p>
         <p class="hero-desc">存储与 AI 双 HCIE · 一线 TD/FDE<br>覆盖金融、政务、智算与存力集群 · 主导大EP昇腾推理与应用落地</p>
         <div class="hero-tags">
-            <span class="tag">Python</span>
-            <span class="tag">PyTorch</span>
-            <span class="tag">LLM</span>
-            <span class="tag">昇腾算力</span>
-            <span class="tag">第一性原理</span>
-            <span class="tag">HCIE×2</span>
+            <span class="tag tag-lg">Python</span>
+            <span class="tag tag-lg">PyTorch</span>
+            <span class="tag tag-lg">LLM</span>
+            <span class="tag tag-lg">昇腾算力</span>
+            <span class="tag tag-lg">第一性原理</span>
+            <span class="tag tag-lg">HCIE×2</span>
         </div>
     </div>
 </header>
@@ -67,8 +76,8 @@
                 <div class="stat-label">HCIE 认证</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">Top 20%</div>
-                <div class="stat-label">硕士成绩</div>
+                <div class="stat-number">AI 全栈</div>
+                <div class="stat-label">Infra + 模型</div>
             </div>
             <div class="stat-item">
                 <div class="stat-number">教育行业首套</div>
@@ -100,7 +109,7 @@
 
         <div class="timeline">
             <!-- Job 1 -->
-            <div class="timeline-item">
+            <div class="timeline-item card">
                 <div class="timeline-header">
                     <div class="timeline-company">
                         <h3>广东咨询与系统集成部 · FDE</h3>
@@ -120,18 +129,18 @@
                     <li><strong>教育行业算力灯塔（SLAI）：</strong>参与华为算力平台先遣队高校分队，聚焦 AI 科研、AI+X 交叉学科、AI 助教/助学四大核心场景；推动 AscendBridge 2.0 开源（模型全自动适配与调优，3天→1小时）；参与全球首发 SLAI 基于国产算力集群完成 DeepSeek-V4-Pro 全参数后训练；联合共建大湾区 AI 产业联合体，孵化昇腾系列微课程与全国首届智能算子测试大赛。</li>
                 </ul>
                 <div class="timeline-tags">
-                    <span class="tag-sm">昇腾算力</span>
-                    <span class="tag-sm">Atlas 800T A3</span>
-                    <span class="tag-sm">AI-Agent</span>
-                    <span class="tag-sm">大模型推理</span>
-                    <span class="tag-sm">SLAI</span>
-                    <span class="tag-sm">AscendBridge</span>
-                    <span class="tag-sm">DeepSeek</span>
+                    <span class="tag tag-sm">昇腾算力</span>
+                    <span class="tag tag-sm">Atlas 800T A3</span>
+                    <span class="tag tag-sm">AI-Agent</span>
+                    <span class="tag tag-sm">大模型推理</span>
+                    <span class="tag tag-sm">SLAI</span>
+                    <span class="tag tag-sm">AscendBridge</span>
+                    <span class="tag tag-sm">DeepSeek</span>
                 </div>
             </div>
 
             <!-- Job 2 -->
-            <div class="timeline-item">
+            <div class="timeline-item card">
                 <div class="timeline-header">
                     <div class="timeline-company">
                         <h3>算力平台战略预备队 · FDE</h3>
@@ -149,14 +158,14 @@
                     <li><strong>能力转型：</strong>存储到 AI 算力平台跨领域技术栈融合。</li>
                 </ul>
                 <div class="timeline-tags">
-                    <span class="tag-sm">AI 全栈</span>
-                    <span class="tag-sm">智算平台</span>
-                    <span class="tag-sm">存算融合</span>
+                    <span class="tag tag-sm">AI 全栈</span>
+                    <span class="tag tag-sm">智算平台</span>
+                    <span class="tag tag-sm">存算融合</span>
                 </div>
             </div>
 
             <!-- Job 3 -->
-            <div class="timeline-item">
+            <div class="timeline-item card">
                 <div class="timeline-header">
                     <div class="timeline-company">
                         <h3>贵州渠道交付管理与集成使能部 · TD</h3>
@@ -174,9 +183,9 @@
                     <li><strong>渠道赋能：</strong>合并公司项与合作伙伴技术赋能，提升区域交付标准化。</li>
                 </ul>
                 <div class="timeline-tags">
-                    <span class="tag-sm">存力集群</span>
-                    <span class="tag-sm">HPC</span>
-                    <span class="tag-sm">技术交付</span>
+                    <span class="tag tag-sm">存力集群</span>
+                    <span class="tag tag-sm">HPC</span>
+                    <span class="tag tag-sm">技术交付</span>
                 </div>
             </div>
         </div>
@@ -188,34 +197,34 @@
     <div class="container">
         <h2 class="section-title">技术栈</h2>
         <div class="skills-grid">
-            <div class="skill-card">
+            <div class="skill-card card">
                 <div class="skill-icon">🧮</div>
                 <h3>数学与算法基础</h3>
                 <p>线性代数 · 微积分 · 概率论 · 凸优化 · 数值分析 · 数据结构与算法</p>
             </div>
-            <div class="skill-card">
+            <div class="skill-card card">
                 <div class="skill-icon">💻</div>
                 <h3>编程与 AI 框架</h3>
                 <p><strong>语言：</strong>Python（主）· C/C++ · MATLAB</p>
                 <p><strong>框架：</strong>PyTorch · Hugging Face · 昇腾 CANN</p>
                 <p>模型训练、微调、推理部署与跨平台移植（AscendBridge）</p>
             </div>
-            <div class="skill-card">
+            <div class="skill-card card">
                 <div class="skill-icon">🧠</div>
                 <h3>机器学习与深度学习</h3>
-                <p>机器学习 · 深度学习 · CNN/NLP · LLM · 深度学习系统<br><strong>课程：</strong><a href="https://courses.d2l.ai/zh-v2/" target="_blank" class="inline-link">动手学深度学习（d2l.ai）</a>— CNN · RNN · Transformer · BERT · 注意力机制 · 计算机视觉 · 目标检测 · 语义分割</p>
+                <p>机器学习 · 深度学习 · CNN/NLP · LLM · 深度学习系统<br><strong>课程：</strong><a href="https://courses.d2l.ai/zh-v2/" target="_blank" rel="noopener noreferrer" class="inline-link">动手学深度学习（d2l.ai）</a>— CNN · RNN · Transformer · BERT · 注意力机制 · 计算机视觉 · 目标检测 · 语义分割</p>
             </div>
-            <div class="skill-card">
+            <div class="skill-card card">
                 <div class="skill-icon">🛠</div>
                 <h3>开发与工具</h3>
                 <p>Git · Docker · Shell · LaTeX · Codex CLI · Cursor · Claude Code</p>
             </div>
-            <div class="skill-card">
+            <div class="skill-card card">
                 <div class="skill-icon">🌍</div>
                 <h3>语言能力</h3>
                 <p>CET-6 英语流利 · 普通话二级甲等</p>
             </div>
-            <div class="skill-card">
+            <div class="skill-card card">
                 <div class="skill-icon">🎓</div>
                 <h3>HCIE 认证</h3>
                 <p>HCIE-AI · HCIE-Storage<br>华为认证 ICT 专家</p>
@@ -229,14 +238,14 @@
     <div class="container">
         <h2 class="section-title">教育背景</h2>
         <div class="edu-grid">
-            <div class="edu-card">
+            <div class="edu-card card">
                 <div class="edu-degree">硕士</div>
                 <h3>重庆大学</h3>
                 <p class="edu-major">计算凝聚态物理 · 均分 85/100（前 20%）</p>
                 <p class="edu-date">2019.09 – 2023.06</p>
                 <p class="edu-courses">固体理论、量子力学、群论；半导体物理、统计力学</p>
             </div>
-            <div class="edu-card">
+            <div class="edu-card card">
                 <div class="edu-degree">学士</div>
                 <h3>四川轻化工大学</h3>
                 <p class="edu-major">材料科学与工程 · 工学学士</p>
@@ -247,13 +256,13 @@
         <div class="cross-discipline">
             <h3>跨学科课程涉猎</h3>
             <div class="cross-tags">
-                <span class="tag-sm">矩阵方法与机器学习</span>
-                <span class="tag-sm">线性代数（Gilbert Strang）</span>
-                <span class="tag-sm">算法（第四版）</span>
-                <span class="tag-sm">离散数学</span>
-                <span class="tag-sm">计算思维与数据科学</span>
-                <span class="tag-sm">电路电子学</span>
-                <span class="tag-sm">数学物理方法</span>
+                <span class="tag tag-sm">矩阵方法与机器学习</span>
+                <span class="tag tag-sm">线性代数（Gilbert Strang）</span>
+                <span class="tag tag-sm">算法（第四版）</span>
+                <span class="tag tag-sm">离散数学</span>
+                <span class="tag tag-sm">计算思维与数据科学</span>
+                <span class="tag tag-sm">电路电子学</span>
+                <span class="tag tag-sm">数学物理方法</span>
             </div>
         </div>
     </div>
@@ -264,26 +273,26 @@
     <div class="container">
         <h2 class="section-title">研究项目</h2>
         <div class="research-list">
-            <div class="research-item">
+            <div class="research-item card">
                 <h3>单位点掺杂石墨烯的气体传感性能研究</h3>
                 <p class="research-meta">2020.03 – 2021.05 · 重庆大学物理学院 · 甘立勇教授课题组</p>
                 <p>通过理论与实验结合，证明 NiN₄ 掺杂石墨烯对 NO、NO₂ 同时具有高敏感性与选择性。基于第一性原理，结合 I-V、态密度、差分电荷密度等验证预测，实验与理论一致。</p>
                 <div class="research-quote">「这项工作可能会进一步促进石墨烯基材料在新兴柔性气体传感器领域研究的发展。」</div>
                 <div class="timeline-tags">
-                    <span class="tag-sm">第一性原理计算</span>
-                    <span class="tag-sm">高通量计算筛选</span>
-                    <span class="tag-sm">材料模拟</span>
-                    <span class="tag-sm">气敏材料</span>
+                    <span class="tag tag-sm">第一性原理计算</span>
+                    <span class="tag tag-sm">高通量计算筛选</span>
+                    <span class="tag tag-sm">材料模拟</span>
+                    <span class="tag tag-sm">气敏材料</span>
                 </div>
             </div>
-            <div class="research-item">
+            <div class="research-item card">
                 <h3>信息安全与隐私保护研究</h3>
                 <p class="research-meta">2020.02 – 2020.08 · 重庆大学软件学院 · 胡春强教授课题组</p>
                 <p>区块链技术与隐私保护理论，分布式系统安全机制；密码学基础与信息安全领域理解。</p>
                 <div class="timeline-tags">
-                    <span class="tag-sm">区块链技术</span>
-                    <span class="tag-sm">隐私保护</span>
-                    <span class="tag-sm">密码学</span>
+                    <span class="tag tag-sm">区块链技术</span>
+                    <span class="tag tag-sm">隐私保护</span>
+                    <span class="tag tag-sm">密码学</span>
                 </div>
             </div>
         </div>
@@ -295,17 +304,17 @@
     <div class="container">
         <h2 class="section-title">联系方式</h2>
         <div class="contact-grid">
-            <a href="mailto:18582035394@163.com" class="contact-card">
+            <a href="mailto:18582035394@163.com" class="contact-card card">
                 <div class="contact-icon">✉️</div>
                 <div class="contact-label">Email</div>
                 <div class="contact-value">18582035394@163.com</div>
             </a>
-            <a href="tel:+8613237926106" class="contact-card">
+            <a href="tel:+8613237926106" class="contact-card card">
                 <div class="contact-icon">📱</div>
                 <div class="contact-label">Phone</div>
                 <div class="contact-value">(+86) 132-379-26106</div>
             </a>
-            <a href="https://gitcode.com/freedom22-cyber" target="_blank" class="contact-card">
+            <a href="https://gitcode.com/freedom22-cyber" target="_blank" rel="noopener noreferrer" class="contact-card card">
                 <div class="contact-icon">💻</div>
                 <div class="contact-label">GitCode</div>
                 <div class="contact-value">freedom22-cyber</div>
@@ -322,16 +331,6 @@
 </footer>
 
 <script>
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
-
 // Nav scroll effect
 const nav = document.querySelector('.nav');
 window.addEventListener('scroll', () => {
@@ -351,7 +350,7 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.timeline-item, .skill-card, .edu-card, .research-item, .contact-card, .stat-item').forEach(el => {
+document.querySelectorAll('.card, .stat-item').forEach(el => {
     el.classList.add('fade-in');
     observer.observe(el);
 });
@@ -360,18 +359,13 @@ document.querySelectorAll('.timeline-item, .skill-card, .edu-card, .research-ite
 const themeToggle = document.getElementById('themeToggle');
 const html = document.documentElement;
 
-function getPreferredTheme() {
-    const saved = localStorage.getItem('theme');
-    if (saved) return saved;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
-
 function applyTheme(theme) {
     html.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
+    themeToggle.setAttribute('aria-label',
+        theme === 'dark' ? '切换到浅色模式' : '切换到深色模式'
+    );
 }
-
-applyTheme(getPreferredTheme());
 
 themeToggle.addEventListener('click', () => {
     const current = html.getAttribute('data-theme');
