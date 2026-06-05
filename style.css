@@ -119,6 +119,7 @@ h1, h2, h3 { text-wrap: balance; }
     display: flex;
     align-items: center;
     justify-content: space-between;
+    overflow: hidden;
 }
 
 .nav-logo {
@@ -130,7 +131,14 @@ h1, h2, h3 { text-wrap: balance; }
     transition: color 0.5s ease;
 }
 
-.nav-links { display: flex; gap: 24px; }
+/* ── Nav Actions (lang + theme toggles) ──────── */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-links { display: flex; gap: 24px; min-width: 0; overflow: hidden; }
 
 .nav-links a {
     font-size: 13px;
@@ -141,6 +149,28 @@ h1, h2, h3 { text-wrap: balance; }
 }
 
 .nav-links a:hover { color: var(--text-1); }
+
+/* ── Language Toggle ────────────────────────── */
+.lang-toggle {
+    background: none;
+    border: 1px solid var(--divider-subtle);
+    cursor: pointer;
+    padding: 4px 12px;
+    border-radius: 980px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-2);
+    transition: all 0.2s ease;
+    letter-spacing: 0.04em;
+    font-family: inherit;
+    line-height: 1;
+}
+
+.lang-toggle:hover {
+    background: var(--blue-soft);
+    color: var(--blue);
+    border-color: transparent;
+}
 
 /* ── Theme Toggle (SVG icons) ──────────────── */
 .theme-toggle {
@@ -752,8 +782,9 @@ h1, h2, h3 { text-wrap: balance; }
     .timeline-meta { text-align: left; margin-top: 4px; }
     .timeline-item { padding: 28px; }
 
-    .nav-links { gap: 18px; }
-    .nav-links a { font-size: 12px; }
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 12px; white-space: nowrap; }
+    .lang-toggle { padding: 3px 9px; font-size: 10px; }
 }
 
 @media (max-width: 480px) {
@@ -762,13 +793,15 @@ h1, h2, h3 { text-wrap: balance; }
     .section-title { font-size: 36px; }
     .section { padding: 64px 0; }
     .stat-number { font-size: 30px; }
-    .nav-links { gap: 14px; }
+    .nav-inner { padding: 0 16px; }
+    .nav-links { gap: 10px; }
     .nav-links a { font-size: 11px; }
+    .lang-toggle { padding: 3px 8px; font-size: 10px; }
 }
 
 /* ── Print — A4 PDF export ──────────────────── */
 @media print {
-    .nav, .theme-toggle, .footer { display: none !important; }
+    .nav, .theme-toggle, .lang-toggle, .footer { display: none !important; }
 
     body { background: white !important; }
     .section-alt { background: white !important; }
