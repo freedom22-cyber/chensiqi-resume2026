@@ -61,6 +61,38 @@
     --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.3), 0 16px 40px rgba(0, 0, 0, 0.4);
 }
 
+/* ── English Typography ─────────────────────── */
+/* English text is ~30% longer than Chinese; scale down
+   layout-sensitive elements to preserve rhythm. */
+[lang="en"] .stat-number {
+    font-size: clamp(20px, 3.5vw, 32px);
+    line-height: 1.2;
+    word-break: break-word;
+}
+
+[lang="en"] .stat-label { font-size: 14px; }
+
+[lang="en"] .hero-eyebrow { font-size: 17px; }
+
+[lang="en"] .hero-desc {
+    font-size: 19px;
+    max-width: 680px;
+}
+
+[lang="en"] .about-text p { font-size: 17.5px; }
+
+[lang="en"] .timeline-company h3 { font-size: 20px; }
+
+[lang="en"] .timeline-details li { font-size: 16px; }
+
+[lang="en"] .skill-card p { font-size: 14.5px; }
+
+[lang="en"] .section-title {
+    font-size: clamp(36px, 6vw, 50px);
+}
+
+[lang="en"] .research-item h3 { font-size: 20px; }
+
 /* ── Inline Link ────────────────────────────── */
 .inline-link { color: var(--blue); text-decoration: none; }
 .inline-link:hover { text-decoration: underline; }
@@ -78,13 +110,14 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     color: var(--text-1);
     background: var(--surface-1);
-    line-height: 1.47;
-    font-size: 17px;
+    line-height: 1.55;
+    font-size: 18px;
     font-weight: 400;
+    font-feature-settings: 'kern' 1, 'liga' 1;
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-h1, h2, h3 { text-wrap: balance; }
+h1, h2, h3 { text-wrap: balance; text-rendering: optimizeLegibility; }
 
 .container { max-width: 980px; margin: 0 auto; padding: 0 24px; }
 
@@ -199,7 +232,7 @@ h1, h2, h3 { text-wrap: balance; }
 }
 
 .hero-eyebrow {
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 500;
     color: var(--text-2);
     letter-spacing: -0.01em;
@@ -234,11 +267,11 @@ h1, h2, h3 { text-wrap: balance; }
 }
 
 .hero-desc {
-    font-size: 20px;
+    font-size: 21px;
     font-weight: 300;
     color: var(--text-2);
-    line-height: 1.65;
-    max-width: 600px;
+    line-height: 1.7;
+    max-width: 620px;
     margin: 0 auto 40px;
     letter-spacing: 0.01em;
     opacity: 0;
@@ -329,14 +362,14 @@ h1, h2, h3 { text-wrap: balance; }
     font-weight: 700;
     letter-spacing: -0.03em;
     color: var(--text-1);
-    line-height: 1.1;
+    line-height: 1.15;
     margin-bottom: 4px;
-    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
     transition: color 0.5s ease;
 }
 
 .stat-label {
-    font-size: 15px;
+    font-size: 15.5px;
     color: var(--text-2);
     font-weight: 400;
     transition: color 0.5s ease;
@@ -361,11 +394,12 @@ h1, h2, h3 { text-wrap: balance; }
 .about-content { max-width: 700px; margin: 0 auto; }
 
 .about-text p {
-    font-size: 18px;
-    line-height: 1.76;
+    font-size: 18.5px;
+    line-height: 1.8;
     color: var(--text-2);
     margin-bottom: 20px;
     font-weight: 300;
+    text-wrap: pretty;
     transition: color 0.5s ease;
 }
 
@@ -457,13 +491,14 @@ h1, h2, h3 { text-wrap: balance; }
 .timeline-details { list-style: none; }
 
 .timeline-details li {
-    font-size: 16px;
-    line-height: 1.7;
+    font-size: 17px;
+    line-height: 1.72;
     color: var(--text-2);
     margin-bottom: 10px;
     padding-left: 18px;
     position: relative;
     font-weight: 300;
+    text-wrap: pretty;
     transition: color 0.5s ease;
 }
 
@@ -557,10 +592,11 @@ h1, h2, h3 { text-wrap: balance; }
 }
 
 .skill-card p {
-    font-size: 15px;
+    font-size: 15.5px;
     color: var(--text-2);
-    line-height: 1.6;
+    line-height: 1.65;
     font-weight: 300;
+    text-wrap: pretty;
     transition: color 0.5s ease;
 }
 
@@ -645,7 +681,7 @@ h1, h2, h3 { text-wrap: balance; }
 }
 
 .research-meta { font-size: 14px; color: var(--text-3); margin-bottom: 18px; }
-.research-item p { font-size: 16px; color: var(--text-2); line-height: 1.75; font-weight: 300; transition: color 0.5s ease; }
+.research-item p { font-size: 17px; color: var(--text-2); line-height: 1.78; font-weight: 300; text-wrap: pretty; transition: color 0.5s ease; }
 
 /* Research quote — background tint, no side-stripe (impeccable ban) */
 .research-quote {
@@ -768,6 +804,7 @@ h1, h2, h3 { text-wrap: balance; }
     .hero-desc { font-size: 18px; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
     .stat-number { font-size: 36px; }
+    [lang="en"] .stat-number { font-size: 26px; }
     .stat-item:not(:last-child)::after { display: none; }
     .section { padding: 80px 0; }
     .section-title { font-size: clamp(36px, 9vw, 44px); margin-bottom: 44px; }
@@ -793,6 +830,7 @@ h1, h2, h3 { text-wrap: balance; }
     .section-title { font-size: 36px; }
     .section { padding: 64px 0; }
     .stat-number { font-size: 30px; }
+    [lang="en"] .stat-number { font-size: 20px; }
     .nav-inner { padding: 0 16px; }
     .nav-links { gap: 10px; }
     .nav-links a { font-size: 11px; }
