@@ -1,2 +1,8 @@
 .DS_Store
 Thumbs.db
+.gstack/
+
+# LaTeX — exclude 43MB fonts, PDF output, and backup snapshots
+latex/fonts/
+*.pdf
+*-bak.tex

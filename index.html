@@ -24,6 +24,122 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&display=swap" rel="stylesheet">
+    <style>
+        /* ── Print / PDF (A4) ───────────────────────
+           Screen layout is a scrolling portfolio with large
+           paddings + light/dark theming. For PDF we force a
+           clean light theme, drop interactive chrome, compress
+           vertical rhythm, and keep cards from breaking across
+           pages. Tuned to land in ~2 A4 pages. */
+        @page { size: A4; margin: 11mm 13mm; }
+        @media print {
+            /* Force light theme regardless of data-theme */
+            :root, [data-theme="dark"] {
+                --text-1: #1d1d1f; --text-2: #3a3a3c; --text-3: #5a5a5e;
+                --surface-1: #ffffff; --surface-2: #ffffff;
+                --blue: #0071e3; --blue-soft: rgba(0, 113, 227, 0.08);
+                --divider-subtle: #e2e2e7;
+                --card-shadow: none; --card-shadow-hover: none;
+            }
+            html, body {
+                background: #fff !important;
+                color: #1d1d1f !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                font-size: 10pt;
+            }
+            /* Hide interactive / non-resume chrome */
+            .nav, .nav-actions, .theme-toggle, .lang-toggle { display: none !important; }
+            .section-alt { background: #fff !important; }
+
+            /* Compress the generous screen rhythm */
+            .hero { padding: 3mm 0 2.5mm !important; }
+            .hero-name { margin-bottom: 1px !important; }
+            .hero-tags { margin-top: 5px !important; }
+            .stats { padding: 2mm 0 !important; }
+            .section { padding: 2mm 0 !important; }
+            .section-title { margin-bottom: 3mm !important; }
+            .timeline { gap: 3mm !important; }
+            .timeline-item { padding: 3.5mm 5mm !important; }
+            .skill-card { padding: 3.5mm 4.5mm !important; }
+            .edu-card, .research-item { padding: 4mm 5mm !important; }
+            .timeline-details { margin-top: 4px !important; }
+            .timeline-tags { margin-top: 6px !important; }
+            .skills-grid { gap: 3mm !important; }
+            .edu-grid { gap: 3mm !important; }
+            .cross-discipline { margin-top: 4mm !important; }
+            .footer { padding: 3mm 0 !important; }
+
+            /* Pagination control — keep the lighter cards whole, but allow
+               the tall featured experience card to split (it alone is ~half
+               a page; forcing it whole wastes a full page tail). */
+            .section-title, h3 { break-after: avoid; page-break-after: avoid; }
+            .timeline-item, .research-item, .edu-card, .about-content {
+                break-inside: avoid; page-break-inside: avoid;
+            }
+            .timeline-item.card--featured { break-inside: avoid; page-break-inside: avoid; }
+            .footer { break-inside: avoid; page-break-inside: avoid; }
+
+            /* Cards: outline instead of shadow for crisp print */
+            .card {
+                border: 1px solid #d6d6dc !important;
+                box-shadow: none !important;
+            }
+            a, .inline-link { color: #0071e3 !important; text-decoration: none !important; }
+
+            /* Force scroll-reveal elements visible (IntersectionObserver
+               never fires for below-the-fold content in headless print) */
+            .fade-in, .fade-in-visible,
+            .hero-eyebrow, .hero-name, .hero-name-en, .hero-desc, .hero-tags {
+                opacity: 1 !important;
+                transform: none !important;
+                animation: none !important;
+            }
+
+            /* Typographic compression — screen sizes (titles up to 56px,
+               body 17–18.5px) are far too large for a 2-page A4 resume.
+               Scale everything down and tighten line-height / margins. */
+            .hero-name { font-size: 26pt !important; }
+            .hero-name-en { font-size: 11pt !important; margin-bottom: 3px !important; }
+            .hero-eyebrow { font-size: 9.5pt !important; }
+            .hero-desc { font-size: 10pt !important; margin: 4px auto 0 !important; }
+            .stat-number { font-size: 17pt !important; }
+            .stat-label { font-size: 8pt !important; }
+            .section-title { font-size: 17pt !important; margin-bottom: 2.5mm !important; }
+            .about-text p { font-size: 9.5pt !important; line-height: 1.4 !important; margin-bottom: 3px !important; }
+            .timeline-company h3 { font-size: 12pt !important; }
+            .timeline-org { font-size: 9.5pt !important; }
+            .timeline-date { font-size: 9.5pt !important; }
+            .timeline-location { font-size: 8.5pt !important; }
+            .timeline-subtitle { font-size: 9pt !important; margin-bottom: 6px !important; }
+            .timeline-details li { font-size: 9.5pt !important; line-height: 1.4 !important; margin-bottom: 2.5px !important; }
+            .skill-card { padding: 4mm 5mm !important; }
+            .skill-card h3 { font-size: 11pt !important; }
+            .skill-card p { font-size: 9pt !important; line-height: 1.42 !important; }
+            .skill-icon, .skill-icon--text { width: 32px !important; height: 32px !important; font-size: 11pt !important; margin-bottom: 8px !important; }
+            .edu-card h3, .research-item h3 { font-size: 11.5pt !important; }
+            .edu-major, .edu-date, .edu-courses { font-size: 9pt !important; }
+            .research-meta { font-size: 8.5pt !important; }
+            .research-item p { font-size: 9.5pt !important; line-height: 1.42 !important; }
+            .tag, .tag-sm, .tag-lg { font-size: 8pt !important; padding: 1.5px 8px !important; }
+            .contact-card { padding: 3mm !important; }
+            .contact-value { font-size: 9pt !important; }
+            .contact-icon { margin-bottom: 4px !important; }
+            .contact-icon svg { width: 18px !important; height: 18px !important; }
+            .contact-label { font-size: 8pt !important; margin: 2px 0 !important; }
+
+            /* Keep stats on one row even at narrow print width */
+            .stats-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 4mm !important; }
+            .stat-item { padding: 6px 4px !important; }
+            /* Skills: tighter icon + denser 2-col grid */
+            .skill-icon, .skill-icon--text { width: 26px !important; height: 26px !important; font-size: 9.5pt !important; margin-bottom: 5px !important; border-radius: 7px !important; }
+            .skill-card h3 { margin-bottom: 3px !important; }
+            /* Pull research / contact up tighter */
+            .research-list { gap: 3mm !important; }
+            .research-item .timeline-tags { margin-top: 6px !important; }
+            .contact-grid { gap: 3mm !important; }
+        }
+    </style>
 </head>
 <body>
 
@@ -54,16 +170,16 @@
 <!-- Hero -->
 <header class="hero">
     <div class="container">
-        <p class="hero-eyebrow" data-i18n="hero.eyebrow">华为 FDE/TD，AI 全栈工程师，计算凝聚态物理硕士</p>
+        <p class="hero-eyebrow" data-i18n="hero.eyebrow">华为 FDE/TD · AI Infra 工程师 · 计算凝聚态物理硕士 · HCIE-AI/Storage 双认证</p>
         <h1 class="hero-name">陈思琪</h1>
         <p class="hero-name-en">Siqi Chen</p>
-        <p class="hero-desc" data-i18n="hero.desc">存储与 AI 双 HCIE，覆盖金融、政务、智算与存力集群，主导大EP昇腾推理与应用落地</p>
+        <p class="hero-desc" data-i18n="hero.desc">大模型训练推理优化 · NV→昇腾模型与算子迁移 · Agent 应用落地 · 国产算力集群端到端交付</p>
         <div class="hero-tags">
             <span class="tag tag-lg">Python</span>
             <span class="tag tag-lg">PyTorch</span>
             <span class="tag tag-lg">LLM</span>
             <span class="tag tag-lg" data-i18n="hero.tag4">昇腾算力</span>
-            <span class="tag tag-lg" data-i18n="hero.tag5">第一性原理</span>
+            <span class="tag tag-lg">FDE</span>
             <span class="tag tag-lg tag--highlight">HCIE ×2</span>
         </div>
     </div>
@@ -75,15 +191,15 @@
         <div class="stats-grid">
             <div class="stat-item">
                 <div class="stat-number">4+</div>
-                <div class="stat-label" data-i18n="stat1.label">年 AI 全栈经验</div>
+                <div class="stat-label" data-i18n="stat1.label">年华为客户交付经验</div>
             </div>
             <div class="stat-item">
                 <div class="stat-number">2</div>
-                <div class="stat-label" data-i18n="stat2.label">HCIE 认证</div>
+                <div class="stat-label" data-i18n="stat2.label">HCIE 认证(存储+AI)</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number" data-i18n="stat3.num">AI 全栈</div>
-                <div class="stat-label" data-i18n="stat3.label">Infra + 模型</div>
+                <div class="stat-number">1728</div>
+                <div class="stat-label" data-i18n="stat3.label">卡昇腾 910C 集群</div>
             </div>
             <div class="stat-item">
                 <div class="stat-number" data-i18n-html="stat4.num">教育行业<br>首套</div>
@@ -99,9 +215,9 @@
         <h2 class="section-title" data-i18n="about.title">个人简述</h2>
         <div class="about-content">
             <div class="about-text">
-                <p data-i18n-html="about.p1"><strong>跨学科认知优势：</strong>计算凝聚态物理训练抽象推理；存储与 AI 双 HCIE 印证从「国家存力集群」到「AI 算力集群」的全栈实践。系统化拆解问题，主导架构设计、平台适配与运维升级，具备技术实现能力和深刻的商业洞察力，旨在攻克AI从演示到规模化应用落地的难题。</p>
-                <p data-i18n-html="about.p2"><strong>跨界交付与价值导向：</strong>一线 TD、FDE——既深入技术细节，又面向客户业务价值；关注真实场景落地与影响，持续学习、快速迭代，相信复杂问题可被拆解与解决。</p>
-                <p data-i18n-html="about.p3"><strong>持续成长：</strong>将 AI-Agent 视为能力延伸，在深度与广度上持续跟进，以开放心态面对技术演进。</p>
+                <p data-i18n-html="about.p1"><strong>大模型工程能力（训练 / 推理 / 迁移）：</strong>基于千卡级昇腾 910C 集群完成 DeepSeek-V4-Pro 全参数后训练长稳运行（MFU 约 30%），主导 NV 模型/算子向昇腾 NPU 自动化迁移与推理调优；熟悉分布式并行（ZeRO/FSDP）、Megatron/DeepSpeed/LLaMA-Factory、vLLM 与昇腾 CANN/Ascend C 算子栈。</p>
+                <p data-i18n-html="about.p2"><strong>FDE 客户交付（端到端 · 生产落地）：</strong>一线 TD（Technical Director）/ FDE（Forward Deployed Engineer），面向金融、政务、教育头部客户，在高不确定性场景下端到端主导前沿大模型生产级交付（需求发现 → 方案拆解 → 系统设计 → 构建 → 生产上线），以生产采纳率、工作流影响与 eval 驱动反馈衡量成果并回流产品/模型路线图。</p>
+                <p data-i18n-html="about.p3"><strong>AI-Agent 与持续成长：</strong>熟练以 Cursor / Claude Code / Codex 进行 AI 辅助开发（Vibe Coding），已落地 AI-Agent 自动迁移工具链；计算凝聚态物理背景训练第一性原理建模与抽象推理，持续跟进 AI 技术演进。</p>
             </div>
         </div>
     </div>
@@ -123,25 +239,24 @@
                     </div>
                     <div class="timeline-meta">
                         <span class="timeline-date" data-i18n="exp1.date">2024.12 - 至今</span>
-                        <span class="timeline-location" data-i18n="exp1.loc">深圳</span>
+                        <span class="timeline-location" data-i18n="exp1.loc">AI Infra</span>
                     </div>
                 </div>
-                <p class="timeline-subtitle" data-i18n="exp1.subtitle">AI 项目群 & 金融头部客户 & 教育行业算力灯塔</p>
+                <p class="timeline-subtitle" data-i18n="exp1.subtitle">AI 项目群 & 金融头部客户 & 教育行业算力灯塔 · AI Infra</p>
                 <ul class="timeline-details">
-                    <li data-i18n-html="exp1.d1"><strong>高潜人才专项：</strong>入选广东代表处「高潜资源池」，骨干参与「政企建能力」，承担深圳政企算力平台服务规模化落地。</li>
-                    <li data-i18n-html="exp1.d2"><strong>教育行业首套超节点：</strong>骨干参与商用 Atlas 800T A3 384 风冷超节点，攻克大规模集群训练通信与稳定性，实现商用上线。</li>
-                    <li data-i18n-html="exp1.d3"><strong>AI 工具链（AscendBridge）：</strong>AI-Agent 实现 HF 模型到昇腾 NPU 迁移从天级到分钟级；SOTA 500 大模型适配与推理部署。</li>
-                    <li data-i18n-html="exp1.d4"><strong>架构与运维：</strong>HCS+第三方模型整体方案；大 EP 与 HCS 深度适配集成；大 EP 平台迭代、升级与日常维护，保障生产高可用。</li>
-                    <li data-i18n-html="exp1.d5"><strong>教育行业算力灯塔（SLAI）：</strong>参与华为算力平台先遣队高校分队，聚焦 AI 科研、AI+X 交叉学科、AI 助教/助学四大核心场景；推动 AscendBridge 2.0 开源（模型全自动适配与调优，3天到1小时）；参与全球首发 SLAI 基于国产算力集群完成 DeepSeek-V4-Pro 全参数后训练；联合共建大湾区 AI 产业联合体，孵化昇腾系列微课程与全国首届智能算子测试大赛。</li>
+                    <li data-i18n-html="exp1.d1"><strong>教育行业首套超节点（千卡分布式训练）：</strong>作为现场 FDE 骨干参与商用 Atlas 800T A3 384 风冷超节点交付，构建 <strong>1728 卡</strong>昇腾 910C 集群，面向 DeepSeek-V4-Pro 等大模型，攻克千卡互联下的通信拓扑优化、分布式并行（数据/张量/流水线，ZeRO/FSDP）、训练稳定性与故障自愈，实现教育行业首套超节点商用上线。</li>
+                    <li data-i18n-html="exp1.d2"><strong>DeepSeek-V4-Pro 全参数后训练长稳运行：</strong>在千卡级昇腾 910C 集群完成全参数后训练（SFT）长稳运行——<strong>1500+ 步迭代，skipped/NaN iterations = 0</strong>；<strong>MFU 约 30%</strong>，关键训练算子计算效率较初版提升约 14%，验证国产算力大规模训练可行性。</li>
+                    <li data-i18n-html="exp1.d3"><strong>AscendBridge 模型/算子迁移工具链（NV→昇腾）：</strong>AI-Agent 自动迁移工具链核心开发者，针对 PyTorch/Transformers 模型（读 Modeling.py、解析计算图）实现 NV GPU 到昇腾 NPU 的自动化模型/算子适配迁移，结合 CANN/Ascend C 与 vLLM 完成多层推理优化；工具链含 <strong>6 智能体、3 工程锁</strong>，实测 Taiyi-LLM <strong>推理提速 37.7%</strong>，迁移周期从天级压缩至分钟级，覆盖 500+ 大模型（LLM / 多模态 / CV）。</li>
+                    <li data-i18n-html="exp1.d4"><strong>FDE 现场交付与客户协同：</strong>作为客户技术接口人，端到端主导需求发现 → 方案拆解 → 系统设计 → 上线交付，与客户工程/业务团队共同梳理业务流程、识别「AI 可介入」边界；输出交付文档与操作手册，开展昇腾算力技术宣讲与培训，并将现场洞察沉淀为可复用方案回流产品/研发。</li>
                 </ul>
                 <div class="timeline-tags">
                     <span class="tag tag-sm" data-i18n="exp1.t1">昇腾算力</span>
                     <span class="tag tag-sm">Atlas 800T A3</span>
                     <span class="tag tag-sm">AI-Agent</span>
                     <span class="tag tag-sm" data-i18n="exp1.t4">大模型推理</span>
-                    <span class="tag tag-sm">SLAI</span>
                     <span class="tag tag-sm">AscendBridge</span>
-                    <span class="tag tag-sm">DeepSeek</span>
+                    <span class="tag tag-sm">DeepSeek-V4-Pro</span>
+                    <span class="tag tag-sm">ZeRO/FSDP</span>
                 </div>
             </div>
 
@@ -157,16 +272,15 @@
                         <span class="timeline-location" data-i18n="exp2.loc">专项攻坚</span>
                     </div>
                 </div>
-                <p class="timeline-subtitle" data-i18n="exp2.subtitle">算力平台标杆项目实战</p>
+                <p class="timeline-subtitle" data-i18n="exp2.subtitle">金融头部客户算力平台标杆落地 · 大模型推理部署</p>
                 <ul class="timeline-details">
-                    <li data-i18n-html="exp2.d1"><strong>金融信创：</strong>深交所、招商证券、深圳公安等算力迁移与模型适配优化。</li>
-                    <li data-i18n-html="exp2.d2"><strong>政务云：</strong>主导深圳市公安局推理模型上云，大模型安全部署与高性能推理。</li>
-                    <li data-i18n-html="exp2.d3"><strong>能力转型：</strong>存储到 AI 算力平台跨领域技术栈融合。</li>
+                    <li data-i18n-html="exp2.d1"><strong>金融大模型推理部署：</strong>作为客户技术接口人深入深交所、招商证券等头部金融客户现场，准确理解并转化业务需求为技术实施方案，主导算力迁移与模型适配优化，在<strong>高安全、低延迟</strong>场景下完成大模型安全部署与高性能推理方案设计；设计模型加密推理与权限管控机制，以可审计、可追溯为标准定义上线验收准则。</li>
+                    <li data-i18n-html="exp2.d3"><strong>POC 验证与跨域能力转型：</strong>配合商务团队完成多轮 POC 测试，输出清晰的交付文档与操作手册；完成从存储到 AI 算力平台的技术栈融合，系统补齐模型训练、推理部署与算力调度能力。</li>
                 </ul>
                 <div class="timeline-tags">
-                    <span class="tag tag-sm" data-i18n="exp2.t1">AI 全栈</span>
-                    <span class="tag tag-sm" data-i18n="exp2.t2">智算平台</span>
-                    <span class="tag tag-sm" data-i18n="exp2.t3">存算融合</span>
+                    <span class="tag tag-sm" data-i18n="exp2.t1">大模型推理</span>
+                    <span class="tag tag-sm">POC</span>
+                    <span class="tag tag-sm" data-i18n="exp2.t3">金融客户</span>
                 </div>
             </div>
 
@@ -182,16 +296,15 @@
                         <span class="timeline-location" data-i18n="exp3.loc">国家级存力枢纽</span>
                     </div>
                 </div>
-                <p class="timeline-subtitle" data-i18n="exp3.subtitle">东数西存枢纽</p>
+                <p class="timeline-subtitle" data-i18n="exp3.subtitle">东数西存枢纽 · 国家级存力枢纽 · HPC 交付</p>
                 <ul class="timeline-details">
-                    <li data-i18n-html="exp3.d1"><strong>存力集群：</strong>国家一体化枢纽存力集群，百 PB 级存储规划、交付与高可用保障。</li>
-                    <li data-i18n-html="exp3.d2"><strong>气象 HPC：</strong>气象高性能计算交付，支撑高精度气象预测算力。</li>
-                    <li data-i18n-html="exp3.d3"><strong>渠道赋能：</strong>合并公司项与合作伙伴技术赋能，提升区域交付标准化。</li>
+                    <li data-i18n-html="exp3.d1"><strong>国家级存力集群交付：</strong>负责国家一体化算力网络枢纽 <strong>1500 PB 级</strong>存力集群的存储规划、架构设计、容量规划与数据迁移，实现生产环境零中断交付，支撑「东数西存」战略落地。</li>
+                    <li data-i18n-html="exp3.d2"><strong>气象 HPC 集群（ARM）性能优化：</strong>完成数值预报模式在 ARM 架构上的编译与依赖库适配（NetCDF / HDF5 / MPI），解决字节对齐与浮点精度差异，实现气象预测软件在 ARM 集群高效稳定运行。</li>
                 </ul>
                 <div class="timeline-tags">
                     <span class="tag tag-sm" data-i18n="exp3.t1">存力集群</span>
                     <span class="tag tag-sm">HPC</span>
-                    <span class="tag tag-sm" data-i18n="exp3.t3">技术交付</span>
+                    <span class="tag tag-sm">ARM</span>
                 </div>
             </div>
         </div>
@@ -204,34 +317,39 @@
         <h2 class="section-title" data-i18n="skills.title">技术栈</h2>
         <div class="skills-grid">
             <div class="skill-card card card--full">
-                <div class="skill-icon skill-icon--text">AI</div>
-                <h3 data-i18n="skills.ai.title">机器学习与深度学习</h3>
-                <p data-i18n-html="skills.ai.desc"><strong>机器学习、深度学习、CNN/NLP、LLM、深度学习系统。</strong>课程：<a href="https://courses.d2l.ai/zh-v2/" target="_blank" rel="noopener noreferrer" class="inline-link">动手学深度学习（d2l.ai）</a>，涵盖 CNN、RNN、Transformer、BERT、注意力机制、计算机视觉、目标检测、语义分割。</p>
+                <div class="skill-icon skill-icon--text">Train</div>
+                <h3 data-i18n="skills.train.title">大模型训练</h3>
+                <p data-i18n-html="skills.train.desc">分布式并行（数据/张量/流水线，ZeRO/FSDP）、千卡互联通信优化、SFT/全参数后训练；Megatron / DeepSpeed / LLaMA-Factory / veRL。</p>
+            </div>
+            <div class="skill-card card card--full">
+                <div class="skill-icon skill-icon--text">Infer</div>
+                <h3 data-i18n="skills.infer.title">推理与算子优化</h3>
+                <p data-i18n-html="skills.infer.desc">vLLM、昇腾 CANN、Ascend C / Triton 算子开发、模型/算子跨平台迁移（NV↔昇腾 NPU）、推理性能与精度调优、内存布局与并行优化。</p>
+            </div>
+            <div class="skill-card card">
+                <div class="skill-icon skill-icon--text">Agent</div>
+                <h3 data-i18n="skills.agent.title">Agent 与应用</h3>
+                <p data-i18n-html="skills.agent.desc">AI-Agent 自动迁移工具链（多智能体编排）、RAG 链路、Eval 评估；API 开发、Docker 容器化、CI/CD。</p>
             </div>
             <div class="skill-card card">
                 <div class="skill-icon skill-icon--text skill-icon--code">&lt;/&gt;</div>
-                <h3 data-i18n="skills.code.title">编程与 AI 框架</h3>
-                <p data-i18n-html="skills.code.desc"><strong>语言：</strong>Python（主）、C/C++、MATLAB<br><strong>框架：</strong>PyTorch、Hugging Face、昇腾 CANN<br>模型训练、微调、推理部署与跨平台移植</p>
-            </div>
-            <div class="skill-card card">
-                <div class="skill-icon skill-icon--text">HCIE</div>
-                <h3 data-i18n="skills.hcie.title">HCIE 认证</h3>
-                <p data-i18n-html="skills.hcie.desc">HCIE-AI · HCIE-Storage<br>华为认证 ICT 专家</p>
+                <h3 data-i18n="skills.vibe.title">AI 辅助开发（Vibe Coding）</h3>
+                <p data-i18n-html="skills.vibe.desc">Cursor、Claude Code、Codex CLI——快速生成测试脚本、转换脚本与排查代码 Bug。</p>
             </div>
             <div class="skill-card card card--full">
+                <div class="skill-icon skill-icon--text">DL</div>
+                <h3 data-i18n="skills.dl.title">深度学习与编程</h3>
+                <p data-i18n-html="skills.dl.desc">机器学习/深度学习、CNN/RNN、Transformer/BERT、注意力机制、CV/目标检测/语义分割、NLP/LLM；Python（主）、C/C++、MATLAB；PyTorch。课程：<a href="https://github.com/d2l-ai/d2l-zh" target="_blank" rel="noopener noreferrer" class="inline-link">动手学深度学习（d2l-zh）</a>。</p>
+            </div>
+            <div class="skill-card card">
                 <div class="skill-icon skill-icon--text skill-icon--math">∑</div>
                 <h3 data-i18n="skills.math.title">数学与算法基础</h3>
                 <p data-i18n="skills.math.desc">线性代数、微积分、概率论、凸优化、数值分析、数据结构与算法</p>
             </div>
             <div class="skill-card card">
-                <div class="skill-icon skill-icon--text">Dev</div>
-                <h3 data-i18n="skills.dev.title">开发与工具</h3>
-                <p data-i18n="skills.dev.desc">Git、Docker、Shell、LaTeX、Codex CLI、Cursor、Claude Code</p>
-            </div>
-            <div class="skill-card card">
-                <div class="skill-icon skill-icon--text">EN</div>
-                <h3 data-i18n="skills.lang.title">语言能力</h3>
-                <p data-i18n="skills.lang.desc">CET-6 英语流利，普通话二级甲等</p>
+                <div class="skill-icon skill-icon--text">HCIE</div>
+                <h3 data-i18n="skills.cert.title">认证与工具</h3>
+                <p data-i18n-html="skills.cert.desc">HCIE-AI · HCIE-Storage 双认证（华为认证 ICT 专家）；Git、Docker、Shell、LaTeX；CET-6 英语流利，普通话二级甲等。</p>
             </div>
         </div>
     </div>
@@ -246,7 +364,7 @@
                 <div class="edu-degree" data-i18n="edu.m.degree">硕士</div>
                 <h3 data-i18n="edu.m.school">重庆大学</h3>
                 <p class="edu-major" data-i18n="edu.m.major">计算凝聚态物理，均分 85/100（前 20%）</p>
-                <p class="edu-date">2019.09 - 2023.06</p>
+                <p class="edu-date">2019.09 - 2022.06</p>
                 <p class="edu-courses" data-i18n="edu.m.courses">固体理论、量子力学、群论、半导体物理、统计力学</p>
             </div>
             <div class="edu-card card">
@@ -260,12 +378,12 @@
         <div class="cross-discipline">
             <h3 data-i18n="edu.cross.title">跨学科课程涉猎</h3>
             <div class="cross-tags">
+                <span class="tag tag-sm" data-i18n="edu.cross.t0">动手学深度学习（d2l-zh）</span>
                 <span class="tag tag-sm" data-i18n="edu.cross.t1">矩阵方法与机器学习</span>
                 <span class="tag tag-sm" data-i18n="edu.cross.t2">线性代数（Gilbert Strang）</span>
                 <span class="tag tag-sm" data-i18n="edu.cross.t3">算法（第四版）</span>
                 <span class="tag tag-sm" data-i18n="edu.cross.t4">离散数学</span>
                 <span class="tag tag-sm" data-i18n="edu.cross.t5">计算思维与数据科学</span>
-                <span class="tag tag-sm" data-i18n="edu.cross.t6">电路电子学</span>
                 <span class="tag tag-sm" data-i18n="edu.cross.t7">数学物理方法</span>
             </div>
         </div>
@@ -280,8 +398,7 @@
             <div class="research-item card">
                 <h3 data-i18n="res1.title">单位点掺杂石墨烯的气体传感性能研究</h3>
                 <p class="research-meta" data-i18n="res1.meta">2020.03 - 2021.05，重庆大学物理学院，甘立勇教授课题组</p>
-                <p data-i18n="res1.desc">通过理论与实验结合，证明 NiN4 掺杂石墨烯对 NO、NO2 同时具有高敏感性与选择性。基于第一性原理，结合 I-V、态密度、差分电荷密度等验证预测，实验与理论一致。</p>
-                <div class="research-quote" data-i18n="res1.quote">「这项工作可能会进一步促进石墨烯基材料在新兴柔性气体传感器领域研究的发展。」</div>
+                <p data-i18n-html="res1.desc">基于第一性原理（DFT），结合 I-V 特性、态密度、差分电荷密度等多维度分析筛选过渡金属单原子掺杂石墨烯气敏材料，并与实验组交叉印证：证明 <strong>NiN4 掺杂石墨烯</strong>对 NO、NO2 同时具有高敏感性与选择性，为石墨烯基柔性气体传感器材料设计提供理论依据。成果发表于 <a href="https://doi.org/10.1016/j.mtcomm.2022.103383" target="_blank" rel="noopener noreferrer" class="inline-link"><em>Materials Today Communications</em></a>。</p>
                 <div class="timeline-tags">
                     <span class="tag tag-sm" data-i18n="res1.t1">第一性原理计算</span>
                     <span class="tag tag-sm" data-i18n="res1.t2">高通量计算筛选</span>
@@ -292,7 +409,7 @@
             <div class="research-item card">
                 <h3 data-i18n="res2.title">信息安全与隐私保护研究</h3>
                 <p class="research-meta" data-i18n="res2.meta">2020.02 - 2020.08，重庆大学软件学院，胡春强教授课题组</p>
-                <p data-i18n="res2.desc">区块链技术与隐私保护理论，分布式系统安全机制；密码学基础与信息安全领域理解。</p>
+                <p data-i18n="res2.desc">研究区块链与隐私保护理论，分析分布式系统安全机制与零知识证明等密码学方案在数据隐私场景的应用可行性，建立信息安全领域的系统性认知框架。</p>
                 <div class="timeline-tags">
                     <span class="tag tag-sm" data-i18n="res2.t1">区块链技术</span>
                     <span class="tag tag-sm" data-i18n="res2.t2">隐私保护</span>
@@ -356,24 +473,22 @@ zh: {
     'nav.contact': '联系',
 
     // Hero
-    'hero.eyebrow': '华为 FDE/TD，AI 全栈工程师，计算凝聚态物理硕士',
-    'hero.desc': '存储与 AI 双 HCIE，覆盖金融、政务、智算与存力集群，主导大EP昇腾推理与应用落地',
+    'hero.eyebrow': '华为 FDE/TD · AI Infra 工程师 · 计算凝聚态物理硕士 · HCIE-AI/Storage 双认证',
+    'hero.desc': '大模型训练推理优化 · NV→昇腾模型与算子迁移 · Agent 应用落地 · 国产算力集群端到端交付',
     'hero.tag4': '昇腾算力',
-    'hero.tag5': '第一性原理',
 
     // Stats
-    'stat1.label': '年 AI 全栈经验',
-    'stat2.label': 'HCIE 认证',
-    'stat3.num': 'AI 全栈',
-    'stat3.label': 'Infra + 模型',
+    'stat1.label': '年华为客户交付经验',
+    'stat2.label': 'HCIE 认证(存储+AI)',
+    'stat3.label': '卡昇腾 910C 集群',
     'stat4.num': '教育行业<br>首套',
     'stat4.label': '超节点商用',
 
     // About
     'about.title': '个人简述',
-    'about.p1': '<strong>跨学科认知优势：</strong>计算凝聚态物理训练抽象推理；存储与 AI 双 HCIE 印证从「国家存力集群」到「AI 算力集群」的全栈实践。系统化拆解问题，主导架构设计、平台适配与运维升级，具备技术实现能力和深刻的商业洞察力，旨在攻克AI从演示到规模化应用落地的难题。',
-    'about.p2': '<strong>跨界交付与价值导向：</strong>一线 TD、FDE——既深入技术细节，又面向客户业务价值；关注真实场景落地与影响，持续学习、快速迭代，相信复杂问题可被拆解与解决。',
-    'about.p3': '<strong>持续成长：</strong>将 AI-Agent 视为能力延伸，在深度与广度上持续跟进，以开放心态面对技术演进。',
+    'about.p1': '<strong>大模型工程能力（训练 / 推理 / 迁移）：</strong>基于千卡级昇腾 910C 集群完成 DeepSeek-V4-Pro 全参数后训练长稳运行（MFU 约 30%），主导 NV 模型/算子向昇腾 NPU 自动化迁移与推理调优；熟悉分布式并行（ZeRO/FSDP）、Megatron/DeepSpeed/LLaMA-Factory、vLLM 与昇腾 CANN/Ascend C 算子栈。',
+    'about.p2': '<strong>FDE 客户交付（端到端 · 生产落地）：</strong>一线 TD（Technical Director）/ FDE（Forward Deployed Engineer），面向金融、政务、教育头部客户，在高不确定性场景下端到端主导前沿大模型生产级交付（需求发现 → 方案拆解 → 系统设计 → 构建 → 生产上线），以生产采纳率、工作流影响与 eval 驱动反馈衡量成果并回流产品/模型路线图。',
+    'about.p3': '<strong>AI-Agent 与持续成长：</strong>熟练以 Cursor / Claude Code / Codex 进行 AI 辅助开发（Vibe Coding），已落地 AI-Agent 自动迁移工具链；计算凝聚态物理背景训练第一性原理建模与抽象推理，持续跟进 AI 技术演进。',
 
     // Experience
     'exp.title': '职业经历',
@@ -381,51 +496,48 @@ zh: {
     'exp1.title': '广东咨询与系统集成部 · FDE',
     'exp1.org': '华为技术有限公司',
     'exp1.date': '2024.12 - 至今',
-    'exp1.loc': '深圳',
-    'exp1.subtitle': 'AI 项目群 & 金融头部客户 & 教育行业算力灯塔',
-    'exp1.d1': '<strong>高潜人才专项：</strong>入选广东代表处「高潜资源池」，骨干参与「政企建能力」，承担深圳政企算力平台服务规模化落地。',
-    'exp1.d2': '<strong>教育行业首套超节点：</strong>骨干参与商用 Atlas 800T A3 384 风冷超节点，攻克大规模集群训练通信与稳定性，实现商用上线。',
-    'exp1.d3': '<strong>AI 工具链（AscendBridge）：</strong>AI-Agent 实现 HF 模型到昇腾 NPU 迁移从天级到分钟级；SOTA 500 大模型适配与推理部署。',
-    'exp1.d4': '<strong>架构与运维：</strong>HCS+第三方模型整体方案；大 EP 与 HCS 深度适配集成；大 EP 平台迭代、升级与日常维护，保障生产高可用。',
-    'exp1.d5': '<strong>教育行业算力灯塔（SLAI）：</strong>参与华为算力平台先遣队高校分队，聚焦 AI 科研、AI+X 交叉学科、AI 助教/助学四大核心场景；推动 AscendBridge 2.0 开源（模型全自动适配与调优，3天到1小时）；参与全球首发 SLAI 基于国产算力集群完成 DeepSeek-V4-Pro 全参数后训练；联合共建大湾区 AI 产业联合体，孵化昇腾系列微课程与全国首届智能算子测试大赛。',
+    'exp1.loc': 'AI Infra',
+    'exp1.subtitle': 'AI 项目群 & 金融头部客户 & 教育行业算力灯塔 · AI Infra',
+    'exp1.d1': '<strong>教育行业首套超节点（千卡分布式训练）：</strong>作为现场 FDE 骨干参与商用 Atlas 800T A3 384 风冷超节点交付，构建 <strong>1728 卡</strong>昇腾 910C 集群，面向 DeepSeek-V4-Pro 等大模型，攻克千卡互联下的通信拓扑优化、分布式并行（数据/张量/流水线，ZeRO/FSDP）、训练稳定性与故障自愈，实现教育行业首套超节点商用上线。',
+    'exp1.d2': '<strong>DeepSeek-V4-Pro 全参数后训练长稳运行：</strong>在千卡级昇腾 910C 集群完成全参数后训练（SFT）长稳运行——<strong>1500+ 步迭代，skipped/NaN iterations = 0</strong>；<strong>MFU 约 30%</strong>，关键训练算子计算效率较初版提升约 14%，验证国产算力大规模训练可行性。',
+    'exp1.d3': '<strong>AscendBridge 模型/算子迁移工具链（NV→昇腾）：</strong>AI-Agent 自动迁移工具链核心开发者，针对 PyTorch/Transformers 模型（读 Modeling.py、解析计算图）实现 NV GPU 到昇腾 NPU 的自动化模型/算子适配迁移，结合 CANN/Ascend C 与 vLLM 完成多层推理优化；工具链含 <strong>6 智能体、3 工程锁</strong>，实测 Taiyi-LLM <strong>推理提速 37.7%</strong>，迁移周期从天级压缩至分钟级，覆盖 500+ 大模型（LLM / 多模态 / CV）。',
+    'exp1.d4': '<strong>FDE 现场交付与客户协同：</strong>作为客户技术接口人，端到端主导需求发现 → 方案拆解 → 系统设计 → 上线交付，与客户工程/业务团队共同梳理业务流程、识别「AI 可介入」边界；输出交付文档与操作手册，开展昇腾算力技术宣讲与培训，并将现场洞察沉淀为可复用方案回流产品/研发。',
     'exp1.t1': '昇腾算力',
     'exp1.t4': '大模型推理',
 
     'exp2.title': '算力平台战略预备队 · FDE',
     'exp2.org': '华为技术有限公司',
     'exp2.loc': '专项攻坚',
-    'exp2.subtitle': '算力平台标杆项目实战',
-    'exp2.d1': '<strong>金融信创：</strong>深交所、招商证券、深圳公安等算力迁移与模型适配优化。',
-    'exp2.d2': '<strong>政务云：</strong>主导深圳市公安局推理模型上云，大模型安全部署与高性能推理。',
-    'exp2.d3': '<strong>能力转型：</strong>存储到 AI 算力平台跨领域技术栈融合。',
-    'exp2.t1': 'AI 全栈',
-    'exp2.t2': '智算平台',
-    'exp2.t3': '存算融合',
+    'exp2.subtitle': '金融头部客户算力平台标杆落地 · 大模型推理部署',
+    'exp2.d1': '<strong>金融大模型推理部署：</strong>作为客户技术接口人深入深交所、招商证券等头部金融客户现场，准确理解并转化业务需求为技术实施方案，主导算力迁移与模型适配优化，在<strong>高安全、低延迟</strong>场景下完成大模型安全部署与高性能推理方案设计；设计模型加密推理与权限管控机制，以可审计、可追溯为标准定义上线验收准则。',
+    'exp2.d3': '<strong>POC 验证与跨域能力转型：</strong>配合商务团队完成多轮 POC 测试，输出清晰的交付文档与操作手册；完成从存储到 AI 算力平台的技术栈融合，系统补齐模型训练、推理部署与算力调度能力。',
+    'exp2.t1': '大模型推理',
+    'exp2.t3': '金融客户',
 
     'exp3.title': '贵州渠道交付管理与集成使能部 · TD',
     'exp3.org': '华为技术有限公司',
     'exp3.loc': '国家级存力枢纽',
-    'exp3.subtitle': '东数西存枢纽',
-    'exp3.d1': '<strong>存力集群：</strong>国家一体化枢纽存力集群，百 PB 级存储规划、交付与高可用保障。',
-    'exp3.d2': '<strong>气象 HPC：</strong>气象高性能计算交付，支撑高精度气象预测算力。',
-    'exp3.d3': '<strong>渠道赋能：</strong>合并公司项与合作伙伴技术赋能，提升区域交付标准化。',
+    'exp3.subtitle': '东数西存枢纽 · 国家级存力枢纽 · HPC 交付',
+    'exp3.d1': '<strong>国家级存力集群交付：</strong>负责国家一体化算力网络枢纽 <strong>1500 PB 级</strong>存力集群的存储规划、架构设计、容量规划与数据迁移，实现生产环境零中断交付，支撑「东数西存」战略落地。',
+    'exp3.d2': '<strong>气象 HPC 集群（ARM）性能优化：</strong>完成数值预报模式在 ARM 架构上的编译与依赖库适配（NetCDF / HDF5 / MPI），解决字节对齐与浮点精度差异，实现气象预测软件在 ARM 集群高效稳定运行。',
     'exp3.t1': '存力集群',
-    'exp3.t3': '技术交付',
 
     // Skills
     'skills.title': '技术栈',
-    'skills.ai.title': '机器学习与深度学习',
-    'skills.ai.desc': '<strong>机器学习、深度学习、CNN/NLP、LLM、深度学习系统。</strong>课程：<a href="https://courses.d2l.ai/zh-v2/" target="_blank" rel="noopener noreferrer" class="inline-link">动手学深度学习（d2l.ai）</a>，涵盖 CNN、RNN、Transformer、BERT、注意力机制、计算机视觉、目标检测、语义分割。',
-    'skills.code.title': '编程与 AI 框架',
-    'skills.code.desc': '<strong>语言：</strong>Python（主）、C/C++、MATLAB<br><strong>框架：</strong>PyTorch、Hugging Face、昇腾 CANN<br>模型训练、微调、推理部署与跨平台移植',
-    'skills.hcie.title': 'HCIE 认证',
-    'skills.hcie.desc': 'HCIE-AI · HCIE-Storage<br>华为认证 ICT 专家',
+    'skills.train.title': '大模型训练',
+    'skills.train.desc': '分布式并行（数据/张量/流水线，ZeRO/FSDP）、千卡互联通信优化、SFT/全参数后训练；Megatron / DeepSpeed / LLaMA-Factory / veRL。',
+    'skills.infer.title': '推理与算子优化',
+    'skills.infer.desc': 'vLLM、昇腾 CANN、Ascend C / Triton 算子开发、模型/算子跨平台迁移（NV↔昇腾 NPU）、推理性能与精度调优、内存布局与并行优化。',
+    'skills.agent.title': 'Agent 与应用',
+    'skills.agent.desc': 'AI-Agent 自动迁移工具链（多智能体编排）、RAG 链路、Eval 评估；API 开发、Docker 容器化、CI/CD。',
+    'skills.vibe.title': 'AI 辅助开发（Vibe Coding）',
+    'skills.vibe.desc': 'Cursor、Claude Code、Codex CLI——快速生成测试脚本、转换脚本与排查代码 Bug。',
+    'skills.dl.title': '深度学习与编程',
+    'skills.dl.desc': '机器学习/深度学习、CNN/RNN、Transformer/BERT、注意力机制、CV/目标检测/语义分割、NLP/LLM；Python（主）、C/C++、MATLAB；PyTorch。课程：<a href="https://github.com/d2l-ai/d2l-zh" target="_blank" rel="noopener noreferrer" class="inline-link">动手学深度学习（d2l-zh）</a>。',
     'skills.math.title': '数学与算法基础',
     'skills.math.desc': '线性代数、微积分、概率论、凸优化、数值分析、数据结构与算法',
-    'skills.dev.title': '开发与工具',
-    'skills.dev.desc': 'Git、Docker、Shell、LaTeX、Codex CLI、Cursor、Claude Code',
-    'skills.lang.title': '语言能力',
-    'skills.lang.desc': 'CET-6 英语流利，普通话二级甲等',
+    'skills.cert.title': '认证与工具',
+    'skills.cert.desc': 'HCIE-AI · HCIE-Storage 双认证（华为认证 ICT 专家）；Git、Docker、Shell、LaTeX；CET-6 英语流利，普通话二级甲等。',
 
     // Education
     'edu.title': '教育背景',
@@ -438,20 +550,19 @@ zh: {
     'edu.b.major': '材料科学与工程，工学学士',
     'edu.b.courses': '材料科学基础、物理化学、材料结构性能表征',
     'edu.cross.title': '跨学科课程涉猎',
+    'edu.cross.t0': '动手学深度学习（d2l-zh）',
     'edu.cross.t1': '矩阵方法与机器学习',
     'edu.cross.t2': '线性代数（Gilbert Strang）',
     'edu.cross.t3': '算法（第四版）',
     'edu.cross.t4': '离散数学',
     'edu.cross.t5': '计算思维与数据科学',
-    'edu.cross.t6': '电路电子学',
     'edu.cross.t7': '数学物理方法',
 
     // Research
     'res.title': '研究项目',
     'res1.title': '单位点掺杂石墨烯的气体传感性能研究',
     'res1.meta': '2020.03 - 2021.05，重庆大学物理学院，甘立勇教授课题组',
-    'res1.desc': '通过理论与实验结合，证明 NiN4 掺杂石墨烯对 NO、NO2 同时具有高敏感性与选择性。基于第一性原理，结合 I-V、态密度、差分电荷密度等验证预测，实验与理论一致。',
-    'res1.quote': '「这项工作可能会进一步促进石墨烯基材料在新兴柔性气体传感器领域研究的发展。」',
+    'res1.desc': '基于第一性原理（DFT），结合 I-V 特性、态密度、差分电荷密度等多维度分析筛选过渡金属单原子掺杂石墨烯气敏材料，并与实验组交叉印证：证明 <strong>NiN4 掺杂石墨烯</strong>对 NO、NO2 同时具有高敏感性与选择性，为石墨烯基柔性气体传感器材料设计提供理论依据。成果发表于 <a href="https://doi.org/10.1016/j.mtcomm.2022.103383" target="_blank" rel="noopener noreferrer" class="inline-link"><em>Materials Today Communications</em></a>。',
     'res1.t1': '第一性原理计算',
     'res1.t2': '高通量计算筛选',
     'res1.t3': '材料模拟',
@@ -459,7 +570,7 @@ zh: {
 
     'res2.title': '信息安全与隐私保护研究',
     'res2.meta': '2020.02 - 2020.08，重庆大学软件学院，胡春强教授课题组',
-    'res2.desc': '区块链技术与隐私保护理论，分布式系统安全机制；密码学基础与信息安全领域理解。',
+    'res2.desc': '研究区块链与隐私保护理论，分析分布式系统安全机制与零知识证明等密码学方案在数据隐私场景的应用可行性，建立信息安全领域的系统性认知框架。',
     'res2.t1': '区块链技术',
     'res2.t2': '隐私保护',
     'res2.t3': '密码学',
@@ -482,24 +593,22 @@ en: {
     'nav.contact': 'Contact',
 
     // Hero
-    'hero.eyebrow': 'Huawei FDE/TD, AI Full-Stack Engineer, M.Sc. Computational Condensed Matter Physics',
-    'hero.desc': 'Dual HCIE in Storage & AI, covering finance, government, AI computing and storage clusters, leading Ascend inference and application deployment',
+    'hero.eyebrow': 'Huawei FDE/TD · AI Infra Engineer · M.Sc. Computational Condensed Matter Physics · Dual HCIE (AI/Storage)',
+    'hero.desc': 'LLM training & inference optimization · NV→Ascend model/operator migration · Agent deployment · end-to-end domestic compute cluster delivery',
     'hero.tag4': 'Ascend Computing',
-    'hero.tag5': 'First Principles',
 
     // Stats
-    'stat1.label': 'Years AI Full-Stack',
-    'stat2.label': 'HCIE Certifications',
-    'stat3.num': 'AI Full-Stack',
-    'stat3.label': 'Infra + Models',
+    'stat1.label': 'Years of Huawei Client Delivery',
+    'stat2.label': 'HCIE Certifications (Storage+AI)',
+    'stat3.label': '-card Ascend 910C Cluster',
     'stat4.num': "Education Industry's<br>First",
     'stat4.label': 'Super-Node Commercial',
 
     // About
     'about.title': 'About',
-    'about.p1': '<strong>Cross-Disciplinary Edge:</strong> Computational condensed matter physics training builds abstract reasoning; dual HCIE in Storage & AI validates full-stack practice from "National Storage Clusters" to "AI Computing Clusters." Systematic problem decomposition, leading architecture design, platform adaptation, and operations upgrades. Combines deep technical capability with sharp business insight, aiming to solve the challenge of scaling AI from demos to production.',
-    'about.p2': '<strong>Cross-Boundary Delivery & Value Focus:</strong> Frontline TD, FDE roles spanning deep technical work and client-facing business value. Focused on real-world deployment and measurable impact, with continuous learning and rapid iteration, driven by the belief that complex problems can be decomposed and solved.',
-    'about.p3': '<strong>Continuous Growth:</strong> Treating AI Agents as capability extensions, staying current across depth and breadth, embracing technology evolution with an open mindset.',
+    'about.p1': '<strong>LLM Engineering (Training / Inference / Migration):</strong> Completed stable full-parameter post-training of DeepSeek-V4-Pro on a kilo-card Ascend 910C cluster (MFU ~30%); led automated migration of NV models/operators to Ascend NPU with inference tuning. Proficient in distributed parallelism (ZeRO/FSDP), Megatron/DeepSpeed/LLaMA-Factory, vLLM, and the Ascend CANN/Ascend C operator stack.',
+    'about.p2': '<strong>FDE Client Delivery (End-to-End · Production):</strong> Frontline TD (Technical Director) / FDE (Forward Deployed Engineer) for top finance, government, and education clients. Own end-to-end production delivery of frontier LLMs in high-ambiguity settings (discovery → scoping → system design → build → rollout), measuring success by production adoption, workflow impact, and eval-driven feedback fed back into product/model roadmaps.',
+    'about.p3': '<strong>AI-Agent & Continuous Growth:</strong> Skilled in AI-assisted development (Vibe Coding) with Cursor / Claude Code / Codex; shipped an AI-Agent automated migration toolchain. Computational condensed matter physics background trains first-principles modeling and abstract reasoning; continuously tracking AI advances.',
 
     // Experience
     'exp.title': 'Experience',
@@ -507,51 +616,48 @@ en: {
     'exp1.title': 'Guangdong Consulting & System Integration · FDE',
     'exp1.org': 'Huawei Technologies Co., Ltd.',
     'exp1.date': '2024.12 - Present',
-    'exp1.loc': 'Shenzhen',
-    'exp1.subtitle': 'AI Projects & Top Financial Clients & Education AI Computing Beacon',
-    'exp1.d1': '<strong>High-Potential Talent Program:</strong> Selected for Guangdong Office\'s "High-Potential Resource Pool," core participant in "Enterprise AI Capability Building," driving scaled deployment of Shenzhen enterprise AI computing platform.',
-    'exp1.d2': '<strong>Education Industry\'s First Super-Node:</strong> Core contributor to commercial Atlas 800T A3 384 air-cooled super-node, solving large-scale cluster training communication and stability challenges for production launch.',
-    'exp1.d3': '<strong>AI Toolchain (AscendBridge):</strong> AI-Agent reducing HF model to Ascend NPU migration from days to minutes; SOTA 500 LLM adaptation and inference deployment.',
-    'exp1.d4': '<strong>Architecture & Operations:</strong> HCS + third-party model integrated solution; large EP and HCS deep integration; large EP platform iteration, upgrade, and daily maintenance, ensuring production high availability.',
-    'exp1.d5': '<strong>Education AI Computing Beacon (SLAI):</strong> Joined Huawei Computing Platform Vanguard\'s University Squad, focusing on four core scenarios: AI research, AI+X interdisciplinary, AI teaching/learning assistance; driving AscendBridge 2.0 open-source (fully automated model adaptation and tuning, from 3 days to 1 hour); participated in the world\'s first SLAI completing DeepSeek-V4-Pro full-parameter post-training on domestic computing clusters; co-building the Greater Bay Area AI Industry Consortium, incubating Ascend micro-course series and China\'s first Intelligent Operator Testing Competition.',
+    'exp1.loc': 'AI Infra',
+    'exp1.subtitle': 'AI Projects & Top Financial Clients & Education AI Computing Beacon · AI Infra',
+    'exp1.d1': '<strong>Education Industry\'s First Super-Node (Kilo-Card Distributed Training):</strong> On-site FDE core contributor to the commercial Atlas 800T A3 384 air-cooled super-node, building a <strong>1,728-card</strong> Ascend 910C cluster for models like DeepSeek-V4-Pro; solved communication topology optimization, distributed parallelism (data/tensor/pipeline, ZeRO/FSDP), training stability and fault self-healing across kilo-card interconnect, achieving the education industry\'s first super-node commercial launch.',
+    'exp1.d2': '<strong>DeepSeek-V4-Pro Full-Parameter Post-Training (Long-Run Stability):</strong> Completed stable full-parameter post-training (SFT) on the kilo-card Ascend 910C cluster — <strong>1,500+ iterations, skipped/NaN iterations = 0</strong>; <strong>MFU ~30%</strong>, key training operator efficiency improved ~14% over the initial version, validating large-scale training on domestic compute.',
+    'exp1.d3': '<strong>AscendBridge Model/Operator Migration Toolchain (NV→Ascend):</strong> Core developer of the AI-Agent automated migration toolchain; for PyTorch/Transformers models (reading Modeling.py, parsing the compute graph) achieved automated NV-GPU-to-Ascend-NPU model/operator adaptation, with multi-layer inference optimization via CANN/Ascend C and vLLM. The toolchain includes <strong>6 agents and 3 engineering locks</strong>; measured <strong>37.7% inference speedup</strong> on Taiyi-LLM, compressing migration from days to minutes across 500+ models (LLM / multimodal / CV).',
+    'exp1.d4': '<strong>FDE On-Site Delivery & Client Collaboration:</strong> As the client technical interface, owned discovery → scoping → system design → rollout end-to-end; worked with client engineering/business teams to map workflows and identify the "AI-can-intervene" boundary; produced delivery docs and operation manuals, ran Ascend computing tech talks and training, and distilled field insights into reusable solutions fed back to product/R&D.',
     'exp1.t1': 'Ascend Computing',
     'exp1.t4': 'LLM Inference',
 
     'exp2.title': 'Computing Platform Strategic Reserve · FDE',
     'exp2.org': 'Huawei Technologies Co., Ltd.',
     'exp2.loc': 'Special Task Force',
-    'exp2.subtitle': 'Computing Platform Benchmark Projects',
-    'exp2.d1': '<strong>Financial IT Localization:</strong> Shenzhen Stock Exchange, China Merchants Securities, Shenzhen Public Security computing migration and model optimization.',
-    'exp2.d2': '<strong>Government Cloud:</strong> Led Shenzhen Public Security inference model cloud deployment, LLM secure deployment and high-performance inference.',
-    'exp2.d3': '<strong>Capability Transition:</strong> Cross-domain tech stack integration from storage to AI computing platform.',
-    'exp2.t1': 'AI Full-Stack',
-    'exp2.t2': 'AI Computing Platform',
-    'exp2.t3': 'Storage-Computing Convergence',
+    'exp2.subtitle': 'Top Financial Clients — Computing Platform Benchmark · LLM Inference Deployment',
+    'exp2.d1': '<strong>Financial LLM Inference Deployment:</strong> As client technical interface, embedded on-site with top financial clients (Shenzhen Stock Exchange, China Merchants Securities), accurately translating business needs into technical implementation plans; led compute migration and model adaptation, delivering secure LLM deployment and high-performance inference under <strong>high-security, low-latency</strong> constraints; designed encrypted inference and access-control mechanisms, defining launch acceptance criteria on auditability and traceability.',
+    'exp2.d3': '<strong>POC Validation & Cross-Domain Transition:</strong> Ran multiple POC rounds with the business team, producing clear delivery docs and operation manuals; integrated the tech stack from storage to AI computing platform, building up model training, inference deployment, and compute scheduling capabilities.',
+    'exp2.t1': 'LLM Inference',
+    'exp2.t3': 'Financial Clients',
 
     'exp3.title': 'Guizhou Channel Delivery & Integration Enablement · TD',
     'exp3.org': 'Huawei Technologies Co., Ltd.',
     'exp3.loc': 'National Storage Hub',
-    'exp3.subtitle': 'East-Data-West-Storage Hub',
-    'exp3.d1': '<strong>Storage Cluster:</strong> National integrated hub storage cluster, 100PB-level storage planning, delivery, and high-availability assurance.',
-    'exp3.d2': '<strong>Meteorological HPC:</strong> High-performance computing delivery, supporting high-precision weather prediction computing.',
-    'exp3.d3': '<strong>Channel Enablement:</strong> Merging corporate projects with partner technical enablement, improving regional delivery standardization.',
+    'exp3.subtitle': 'East-Data-West-Storage Hub · National Storage Hub · HPC Delivery',
+    'exp3.d1': '<strong>National Storage Cluster Delivery:</strong> Led storage planning, architecture design, capacity planning, and data migration for a <strong>1,500 PB-class</strong> national integrated computing-network hub storage cluster, achieving zero-downtime production delivery in support of the "East-Data-West-Storage" strategy.',
+    'exp3.d2': '<strong>Meteorological HPC Cluster (ARM) Optimization:</strong> Completed compilation and dependency adaptation (NetCDF / HDF5 / MPI) of numerical forecast models on the ARM architecture, resolving byte-alignment and floating-point precision differences, enabling efficient and stable operation of meteorological software on the ARM cluster.',
     'exp3.t1': 'Storage Cluster',
-    'exp3.t3': 'Technical Delivery',
 
     // Skills
     'skills.title': 'Tech Stack',
-    'skills.ai.title': 'Machine Learning & Deep Learning',
-    'skills.ai.desc': '<strong>ML, DL, CNN/NLP, LLM, Deep Learning Systems.</strong> Coursework: <a href="https://courses.d2l.ai/en-v2/" target="_blank" rel="noopener noreferrer" class="inline-link">Dive into Deep Learning (d2l.ai)</a>, covering CNN, RNN, Transformer, BERT, Attention, Computer Vision, Object Detection, Semantic Segmentation.',
-    'skills.code.title': 'Programming & AI Frameworks',
-    'skills.code.desc': '<strong>Languages:</strong> Python (primary), C/C++, MATLAB<br><strong>Frameworks:</strong> PyTorch, Hugging Face, Ascend CANN<br>Model training, fine-tuning, inference deployment & cross-platform porting',
-    'skills.hcie.title': 'HCIE Certifications',
-    'skills.hcie.desc': 'HCIE-AI · HCIE-Storage<br>Huawei Certified ICT Expert',
+    'skills.train.title': 'LLM Training',
+    'skills.train.desc': 'Distributed parallelism (data/tensor/pipeline, ZeRO/FSDP), kilo-card interconnect communication optimization, SFT / full-parameter post-training; Megatron / DeepSpeed / LLaMA-Factory / veRL.',
+    'skills.infer.title': 'Inference & Operator Optimization',
+    'skills.infer.desc': 'vLLM, Ascend CANN, Ascend C / Triton operator development, cross-platform model/operator migration (NV↔Ascend NPU), inference performance & accuracy tuning, memory layout & parallelism optimization.',
+    'skills.agent.title': 'Agents & Applications',
+    'skills.agent.desc': 'AI-Agent automated migration toolchain (multi-agent orchestration), RAG pipelines, Eval; API development, Docker containerization, CI/CD.',
+    'skills.vibe.title': 'AI-Assisted Dev (Vibe Coding)',
+    'skills.vibe.desc': 'Cursor, Claude Code, Codex CLI — rapidly generating test scripts, conversion scripts, and debugging code.',
+    'skills.dl.title': 'Deep Learning & Programming',
+    'skills.dl.desc': 'ML/DL, CNN/RNN, Transformer/BERT, attention, CV/object detection/semantic segmentation, NLP/LLM; Python (primary), C/C++, MATLAB; PyTorch. Coursework: <a href="https://github.com/d2l-ai/d2l-zh" target="_blank" rel="noopener noreferrer" class="inline-link">Dive into Deep Learning (d2l-zh)</a>.',
     'skills.math.title': 'Mathematics & Algorithms',
     'skills.math.desc': 'Linear Algebra, Calculus, Probability, Convex Optimization, Numerical Analysis, Data Structures & Algorithms',
-    'skills.dev.title': 'Development & Tools',
-    'skills.dev.desc': 'Git, Docker, Shell, LaTeX, Codex CLI, Cursor, Claude Code',
-    'skills.lang.title': 'Languages',
-    'skills.lang.desc': 'CET-6 Fluent English, Mandarin Level 2-A',
+    'skills.cert.title': 'Certifications & Tools',
+    'skills.cert.desc': 'Dual HCIE-AI · HCIE-Storage (Huawei Certified ICT Expert); Git, Docker, Shell, LaTeX; CET-6 fluent English, Mandarin Level 2-A.',
 
     // Education
     'edu.title': 'Education',
@@ -564,20 +670,19 @@ en: {
     'edu.b.major': 'Materials Science and Engineering, B.Eng.',
     'edu.b.courses': 'Fundamentals of Materials Science, Physical Chemistry, Material Structure & Property Characterization',
     'edu.cross.title': 'Interdisciplinary Coursework',
+    'edu.cross.t0': 'Dive into Deep Learning (d2l-zh)',
     'edu.cross.t1': 'Matrix Methods & Machine Learning',
     'edu.cross.t2': 'Linear Algebra (Gilbert Strang)',
     'edu.cross.t3': 'Algorithms (4th Edition)',
     'edu.cross.t4': 'Discrete Mathematics',
     'edu.cross.t5': 'Computational Thinking & Data Science',
-    'edu.cross.t6': 'Circuit Electronics',
     'edu.cross.t7': 'Mathematical Physics Methods',
 
     // Research
     'res.title': 'Research',
     'res1.title': 'Gas Sensing Properties of Single-Site Doped Graphene',
     'res1.meta': '2020.03 - 2021.05, School of Physics, Chongqing University, Prof. Liyong Gan\'s Group',
-    'res1.desc': 'Combined theoretical and experimental approaches to demonstrate that NiN4-doped graphene exhibits high sensitivity and selectivity for both NO and NO2 simultaneously. Based on first-principles calculations, verified predictions using I-V characteristics, density of states, and differential charge density, achieving experimental-theoretical consistency.',
-    'res1.quote': '"This work may further promote the development of graphene-based materials in emerging flexible gas sensor research."',
+    'res1.desc': 'Using first-principles (DFT) with multi-dimensional analysis (I-V characteristics, density of states, differential charge density) to screen transition-metal single-atom-doped graphene gas-sensing materials, cross-validated with the experimental group: demonstrated that <strong>NiN4-doped graphene</strong> exhibits high sensitivity and selectivity for both NO and NO2, providing a theoretical basis for graphene-based flexible gas sensor material design. Published in <a href="https://doi.org/10.1016/j.mtcomm.2022.103383" target="_blank" rel="noopener noreferrer" class="inline-link"><em>Materials Today Communications</em></a>.',
     'res1.t1': 'First Principles Calculation',
     'res1.t2': 'High-Throughput Screening',
     'res1.t3': 'Materials Simulation',
@@ -585,7 +690,7 @@ en: {
 
     'res2.title': 'Information Security & Privacy Protection Research',
     'res2.meta': '2020.02 - 2020.08, School of Software, Chongqing University, Prof. Chunqiang Hu\'s Group',
-    'res2.desc': 'Blockchain technology and privacy protection theory, distributed system security mechanisms; cryptography fundamentals and information security domain understanding.',
+    'res2.desc': 'Studied blockchain and privacy-protection theory, analyzing the feasibility of distributed-system security mechanisms and cryptographic schemes such as zero-knowledge proofs in data-privacy scenarios, building a systematic understanding of the information security domain.',
     'res2.t1': 'Blockchain Technology',
     'res2.t2': 'Privacy Protection',
     'res2.t3': 'Cryptography',

@@ -1,0 +1,91 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{resume}
+\usepackage{zh_CN-Adobefonts_external} % Simplified Chinese Support using external fonts
+\usepackage{linespacing_fix} % disable extra space before next section
+\usepackage{cite}
+
+\linespread{1.25} % 调大正文行间距
+
+\begin{document}
+\pagenumbering{gobble} % suppress displaying page number
+
+\name{陈思琪}
+
+\basicInfo{
+  \email{18582035394@163.com} \textperiodcentered\
+  \phone{(+86) 132-379-26106} \textperiodcentered\
+  \github[GitCode]{https://gitcode.com/freedom22-cyber}
+}
+
+\centerline{\small 华为 FDE/TD · AI Infra 工程师 · 计算凝聚态物理硕士 · HCIE-AI/Storage 双认证}
+\vspace{0.5ex}
+\centerline{\small 大模型训练推理优化 · NV$\to$昇腾模型与算子迁移 · Agent 应用落地 · 国产算力集群端到端交付}
+\vspace{1.5ex}
+
+%======================================================================
+\section{\texorpdfstring{\faUser\ }{}个人简述}
+
+\textbf{大模型工程能力（训练 / 推理 / 迁移）：}基于千卡级昇腾 910C 集群完成 DeepSeek-V4-Pro 全参数后训练长稳运行（MFU 约 30\%），主导 NV 模型/算子向昇腾 NPU 自动化迁移与推理调优；熟悉分布式并行（ZeRO/FSDP）、Megatron/DeepSpeed/LLaMA-Factory、vLLM 与昇腾 CANN/Ascend C 算子栈。
+
+\textbf{FDE 客户交付（端到端 · 生产落地）：}一线 TD（Technical Director）/ FDE（Forward Deployed Engineer），面向金融、政务、教育头部客户，在高不确定性场景下端到端主导前沿大模型生产级交付（需求发现 $\to$ 方案拆解 $\to$ 系统设计 $\to$ 构建 $\to$ 生产上线），以\textbf{生产采纳率、工作流影响与 eval 驱动反馈}衡量成果并回流产品/模型路线图；既深入算子级细节，又对客户业务结果负责，擅长把复杂技术转化为业务价值。
+
+\textbf{AI-Agent 与持续成长：}熟练以 Cursor / Claude Code / Codex 进行 AI 辅助开发（Vibe Coding），已落地 AI-Agent 自动迁移工具链；计算凝聚态物理背景训练第一性原理建模与抽象推理，持续跟进 AI 技术演进。
+
+%======================================================================
+\section{\texorpdfstring{\faUsers\ }{}职业经历}
+
+\datedsubsection{\textbf{华为技术有限公司} 广东咨询与系统集成部 · FDE}{2024.12 -- 至今}
+\textit{AI 项目群 \& 金融头部客户 \& 教育行业算力灯塔} \quad \textit{AI Infra · 大模型训练推理}
+\begin{itemize}
+  \item \textbf{教育行业首套超节点（千卡分布式训练）：}作为现场 FDE 骨干参与商用 Atlas 800T A3 384 风冷超节点交付，构建 \textbf{1728 卡}昇腾 910C 集群，面向 DeepSeek-V4-Pro 等大模型，攻克千卡互联下的\textbf{通信拓扑优化、分布式并行（数据/张量/流水线，ZeRO/FSDP）、训练稳定性与故障自愈}，实现教育行业首套超节点商用上线。
+  \item \textbf{DeepSeek-V4-Pro 全参数后训练长稳运行：}在千卡级昇腾 910C 集群完成全参数后训练（SFT）长稳运行——\textbf{1500+ 步迭代，skipped/NaN iterations = 0}；\textbf{MFU 约 30\%}，关键训练算子计算效率较初版\textbf{提升约 14\%}，验证国产算力大规模训练可行性。
+  \item \textbf{AscendBridge 模型/算子迁移工具链（NV$\to$昇腾）：}AI-Agent 自动迁移工具链核心开发者，针对 PyTorch/Transformers 模型（读 Modeling.py、解析计算图）实现 NV GPU 到昇腾 NPU 的\textbf{自动化模型/算子适配迁移}，结合 CANN/Ascend C 与 vLLM 完成\textbf{多层推理优化}；工具链含 \textbf{6 智能体、3 工程锁}，实测 Taiyi-LLM \textbf{推理提速 37.7\%}，迁移周期从天级压缩至分钟级，覆盖 500+ 大模型（LLM / 多模态 / CV）。
+  \item \textbf{FDE 现场交付与客户协同：}作为客户技术接口人，端到端主导需求发现 $\to$ 方案拆解 $\to$ 系统设计 $\to$ 上线交付，与客户工程/业务团队共同梳理业务流程、识别「AI 可介入」边界；输出交付文档与操作手册，开展昇腾算力技术宣讲与培训，并将现场洞察沉淀为可复用方案回流产品/研发。入选部门「高潜资源池」，参与「政企建能力」战略推动多行业规模化交付。
+\end{itemize}
+
+\datedsubsection{\textbf{华为技术有限公司} 算力平台战略预备队 · FDE}{2024.08 -- 2024.12}
+\textit{金融头部客户算力平台标杆落地} \quad \textit{大模型推理部署}
+\begin{itemize}
+  \item \textbf{金融大模型推理部署：}作为客户技术接口人深入深交所、招商证券等头部金融客户现场，准确理解并转化业务需求为技术实施方案，主导算力迁移与模型适配优化，在\textbf{高安全、低延迟}场景下完成大模型安全部署与高性能推理方案设计；设计模型加密推理与权限管控机制，以\textbf{可审计、可追溯}为标准定义上线验收准则。
+  \item \textbf{POC 验证与跨域能力转型：}配合商务团队完成多轮 POC 测试，输出清晰的交付文档与操作手册；完成从存储到 AI 算力平台的技术栈融合，系统补齐模型训练、推理部署与算力调度能力。
+\end{itemize}
+
+\datedsubsection{\textbf{华为技术有限公司} 贵州渠道交付管理与集成使能部 · TD}{2022.12 -- 2024.08}
+\textit{东数西存枢纽} \quad \textit{国家级存力枢纽 · HPC 交付}
+\begin{itemize}
+  \item \textbf{国家级存力集群交付：}负责国家一体化算力网络枢纽\textbf{ 1500 PB 级}存力集群的存储规划、架构设计、容量规划与数据迁移，实现生产环境零中断交付，支撑「东数西存」战略落地。
+  \item \textbf{气象 HPC 集群（ARM）性能优化：}完成数值预报模式在 \textbf{ARM 架构}上的编译与依赖库适配（NetCDF / HDF5 / MPI），解决字节对齐与浮点精度差异，实现气象预测软件在 ARM 集群高效稳定运行。
+\end{itemize}
+
+%======================================================================
+\section{\texorpdfstring{\faGraduationCap\ }{}教育背景}
+
+\datedsubsection{\textbf{重庆大学} 硕士 · 计算凝聚态物理}{2019.09 -- 2022.06}
+均分 85/100（前 20\%）\quad 主修：固体理论、量子力学、群论、半导体物理、统计力学
+
+\vspace{0.5ex}
+\textbf{跨学科课程：}动手学深度学习（\href{https://github.com/d2l-ai/d2l-zh}{d2l-zh}）、矩阵方法与机器学习、线性代数（Gilbert Strang）、算法（第四版）、离散数学、计算思维与数据科学、数学物理方法
+
+%======================================================================
+\section{\texorpdfstring{\faCogs\ }{}技术栈}
+\begin{itemize}[parsep=0.5ex]
+  \item \textbf{大模型训练：}分布式并行（数据/张量/流水线，ZeRO/FSDP）、千卡互联通信优化、SFT/全参数后训练；Megatron / DeepSpeed / LLaMA-Factory / veRL。
+  \item \textbf{推理与算子优化：}vLLM、昇腾 CANN、Ascend C / Triton 算子开发、模型/算子跨平台迁移（NV$\leftrightarrow$昇腾 NPU）、推理性能与精度调优、内存布局与并行优化。
+  \item \textbf{Agent 与应用：}AI-Agent 自动迁移工具链（多智能体编排）、RAG 链路、Eval 评估；API 开发、Docker 容器化、CI/CD。
+  \item \textbf{AI 辅助开发（Vibe Coding）：}Cursor、Claude Code、Codex CLI——快速生成测试脚本、转换脚本与排查代码 Bug。
+  \item \textbf{深度学习与编程：}机器学习/深度学习、CNN/RNN、Transformer/BERT、注意力机制、CV/目标检测/语义分割、NLP/LLM；Python（主）、C/C++、MATLAB；PyTorch。
+  \item \textbf{数学与算法基础：}线性代数、微积分、概率论、凸优化、数值分析、数据结构与算法。
+  \item \textbf{认证与工具：}HCIE-AI · HCIE-Storage 双认证（华为认证 ICT 专家）；Git、Docker、Shell、\LaTeX；CET-6 英语流利，普通话二级甲等。
+\end{itemize}
+
+%======================================================================
+\section{\texorpdfstring{\faFlask\ }{}研究项目}
+
+\datedsubsection{\textbf{单位点掺杂石墨烯的气体传感性能研究} 重庆大学物理学院 · 甘立勇教授课题组}{2020.03 -- 2021.05}
+\begin{itemize}
+  \item 基于第一性原理（DFT），结合 I-V 特性、态密度、差分电荷密度等多维度分析筛选过渡金属单原子掺杂石墨烯气敏材料，并与实验组交叉印证：证明 \textbf{NiN$_4$ 掺杂石墨烯}对 NO、NO$_2$ 同时具有高敏感性与选择性，为石墨烯基柔性气体传感器材料设计提供理论依据；成果发表于 \textit{Materials Today Communications}（\href{https://doi.org/10.1016/j.mtcomm.2022.103383}{doi.org/10.1016/j.mtcomm.2022.103383}）。
+\end{itemize}
+
+\end{document}
